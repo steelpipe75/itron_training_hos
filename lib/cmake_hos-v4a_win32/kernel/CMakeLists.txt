@@ -26,18 +26,6 @@ if(NOT CMAKE_BUILD_TYPE)
         "Debug" "Release")
 endif()
 
-if (MSVC)
-    set(CMAKE_C_FLAGS   "/W4 /WX-")
-    set(CMAKE_CXX_FLAGS "/W4 /WX-")
-else()
-    set(CMAKE_C_FLAGS           "-Wall -Wextra")
-    set(CMAKE_CXX_FLAGS         "-Wall -Wextra")
-    set(CMAKE_C_FLAGS_DEBUG     "-g -O0")
-    set(CMAKE_CXX_FLAGS_DEBUG   "-g -O0")
-    set(CMAKE_C_FLAGS_RELEASE   "-O3 -DNDEBUG")
-    set(CMAKE_CXX_FLAGS_RELEASE "-O3 -DNDEBUG")
-endif()
-
 #################################################################################
 
 if(NOT WORKSPACE_ROOT_DIR)

@@ -3,9 +3,6 @@ cmake_minimum_required(VERSION 3.16)
 
 #################################################################################
 
-
-#################################################################################
-
 set(KERNEL_DIR          "${WORKSPACE_ROOT_DIR}/lib/third_party/hos-v4a/kernel")
 set(KERNEL_SRC_DIR      "${KERNEL_DIR}/source")
 set(KERNEL_INC_DIR      "${KERNEL_DIR}/include")
@@ -14,7 +11,6 @@ set(KERNEL_OBJ_DIR      "${KERNEL_SRC_DIR}/object")
 set(KERNEL_INC_PROC_DIR "${KERNEL_INC_DIR}/arch/proc/${ARCH_PROC}")
 set(KERNEL_INC_IRC_DIR  "${KERNEL_INC_DIR}/arch/irc/${ARCH_IRC}")
 set(KERNEL_SRC_PROC_DIR "${KERNEL_SRC_DIR}/arch/proc/${ARCH_PROC}")
-
 
 # Dispatcher
 set(DSP_DIR ${KERNEL_CORE_DIR}/dsp)
@@ -285,6 +281,8 @@ set(KERNEL_SRCS ${KERNEL_SRCS}
     ${EXCOBJ_DIR}/exe_exc.c
 )
 
+#################################################################################
+
 add_library(hosv4a STATIC
     ${KERNEL_SRCS}
     ${KERNEL_SRC_PROC_DIR}/kcre_ctx.c
@@ -305,3 +303,9 @@ target_include_directories(hosv4a PUBLIC
     ${KERNEL_INC_IRC_DIR}
 )
 
+target_compile_options(hosv4a PUBLIC
+  PRIVATE $<$<CXX_COMPILER_ID:MSVC>:/W4 /WX- /utf-8>
+  PRIVATE $<$<CXX_COMPILER_ID:Clang>:-Wall -Wextra>
+  PRIVATE $<$<AND:$<CXX_COMPILER_ID:Clang>,$<CONFIG:Debug>>:-g -O0>
+  PRIVATE $<$<AND:$<CXX_COMPILER_ID:Clang>,$<CONFIG:Release>>:-O3 -DNDEBUG>
+)

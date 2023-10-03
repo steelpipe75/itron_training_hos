@@ -43,14 +43,14 @@ add_executable(h4acfg-win32
     ${H4ACFG_SRC_DIR}/attisr.cpp
 )
 
-target_include_directories(h4acfg-win32 PUBLIC
+target_include_directories(h4acfg-win32 PRIVATE
     ${H4ACFG_INC_DIR}
     ${KERNEL_INC_DIR}
     ${KERNEL_PROC_DIR}
     ${KERNEL_IRC_DIR}
 )
 
-target_compile_options(h4acfg-win32 PUBLIC
+target_compile_options(h4acfg-win32
   PRIVATE $<$<CXX_COMPILER_ID:MSVC>:/W4 /WX- /utf-8>
   PRIVATE $<$<CXX_COMPILER_ID:Clang>:-Wall -Wextra>
   PRIVATE $<$<AND:$<CXX_COMPILER_ID:Clang>,$<CONFIG:Debug>>:-g -O0>

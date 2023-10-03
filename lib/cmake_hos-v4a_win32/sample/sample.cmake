@@ -24,15 +24,6 @@ add_custom_command(
     COMMAND h4acfg-win32 ${CMAKE_BINARY_DIR}/system.i -c ${CMAKE_BINARY_DIR}/kernel_cfg.c -i ${CMAKE_BINARY_DIR}/kernel_id.h
 )
 
-include_directories(
-    ${H4ACFG_INC_DIR}
-    ${KERNEL_INC_DIR}
-    ${KERNEL_PROC_DIR}
-    ${KERNEL_IRC_DIR}
-    ${CMAKE_BINARY_DIR}
-    ${WIN32_SAMPLE_DIR}
-)
-
 add_executable(sample
     ${CMAKE_BINARY_DIR}/kernel_cfg.c
 
@@ -44,7 +35,16 @@ add_executable(sample
 
 target_link_libraries(sample hosv4a winmm)
 
-target_compile_options(h4acfg-win32 PUBLIC
+target_include_directories(sample PRIVATE
+    ${H4ACFG_INC_DIR}
+    ${KERNEL_INC_DIR}
+    ${KERNEL_PROC_DIR}
+    ${KERNEL_IRC_DIR}
+    ${CMAKE_BINARY_DIR}
+    ${WIN32_SAMPLE_DIR}
+)
+
+target_compile_options(h4acfg-win32
   PRIVATE $<$<CXX_COMPILER_ID:MSVC>:/W4 /WX- /utf-8>
   PRIVATE $<$<CXX_COMPILER_ID:Clang>:-Wall -Wextra>
   PRIVATE $<$<AND:$<CXX_COMPILER_ID:Clang>,$<CONFIG:Debug>>:-g -O0>

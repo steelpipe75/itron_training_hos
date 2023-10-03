@@ -297,13 +297,13 @@ add_library(hosv4a STATIC
     ${KERNEL_SRC_PROC_DIR}/vsig_int.c
 )
 
-target_include_directories(hosv4a PUBLIC
+target_include_directories(hosv4a PRIVATE
     ${KERNEL_INC_DIR}
     ${KERNEL_INC_PROC_DIR}
     ${KERNEL_INC_IRC_DIR}
 )
 
-target_compile_options(hosv4a PUBLIC
+target_compile_options(hosv4a
   PRIVATE $<$<CXX_COMPILER_ID:MSVC>:/W4 /WX- /utf-8>
   PRIVATE $<$<CXX_COMPILER_ID:Clang>:-Wall -Wextra>
   PRIVATE $<$<AND:$<CXX_COMPILER_ID:Clang>,$<CONFIG:Debug>>:-g -O0>

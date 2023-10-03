@@ -27,7 +27,7 @@ if(NOT CMAKE_BUILD_TYPE)
 endif()
 
 if (MSVC)
-    set(CMAKE_CXX_FLAGS "/W4 /WX-")
+    set(CMAKE_CXX_FLAGS "/W4 /WX- /utf-8")
 else()
     set(CMAKE_CXX_FLAGS "-Wall -Wextra")
     set(CMAKE_CXX_FLAGS_DEBUG "-g -O0")

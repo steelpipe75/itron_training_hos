@@ -11,11 +11,20 @@ find_file(SYSTEM_CONFIG_FILE system.cfg
     PATH ${WIN32_SAMPLE_DIR}/
 )
 
-add_custom_command(
-    OUTPUT  ${CMAKE_BINARY_DIR}/system.i
-    DEPENDS ${SYSTEM_CONFIG_FILE}
-    COMMAND ${CMAKE_C_COMPILER} ${CMAKE_C_COMPILER_ARG1} -E -x c -o system.i ${SYSTEM_CONFIG_FILE}
-)
+if(MSVC)
+    add_custom_command(
+        OUTPUT  ${CMAKE_BINARY_DIR}/system.i
+        DEPENDS ${SYSTEM_CONFIG_FILE}
+        COMMAND ${CMAKE_C_COMPILER} ${CMAKE_C_COMPILER_ARG1} /P ${SYSTEM_CONFIG_FILE}
+    )
+else()
+    add_custom_command(
+        OUTPUT  ${CMAKE_BINARY_DIR}/system.i
+        DEPENDS ${SYSTEM_CONFIG_FILE}
+        COMMAND ${CMAKE_C_COMPILER} ${CMAKE_C_COMPILER_ARG1} -E -x c -o system.i ${SYSTEM_CONFIG_FILE}
+    )
+endif()
+
 
 add_custom_command(
     OUTPUT  ${CMAKE_BINARY_DIR}/kernel_cfg.c ${CMAKE_BINARY_DIR}/kernel_id.h

@@ -78,6 +78,10 @@ add_custom_command(
 )
 
 add_executable(sample
+
+    ${KERNEL_SRC_PROC_DIR}/ksta_ctx.c
+#   ./ksta_ctx.c
+
     ${CMAKE_BINARY_DIR}/kernel_cfg.c
 
     ${WIN32_SAMPLE_DIR}/main.c

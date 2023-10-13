@@ -55,4 +55,7 @@ target_compile_options(h4acfg-win32
   PRIVATE $<$<CXX_COMPILER_ID:Clang>:-Wall -Wextra>
   PRIVATE $<$<AND:$<CXX_COMPILER_ID:Clang>,$<CONFIG:Debug>>:-g -O0>
   PRIVATE $<$<AND:$<CXX_COMPILER_ID:Clang>,$<CONFIG:Release>>:-O3 -DNDEBUG>
+  PRIVATE $<$<CXX_COMPILER_ID:GNU>:-Wall>
+  PRIVATE $<$<AND:$<CXX_COMPILER_ID:GNU>,$<CONFIG:Debug>>:-g -O0>
+  PRIVATE $<$<AND:$<CXX_COMPILER_ID:GNU>,$<CONFIG:Release>>:-O3 -DNDEBUG>
 )

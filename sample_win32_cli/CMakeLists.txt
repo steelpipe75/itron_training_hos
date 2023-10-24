@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 3.16)
 
 # project情報
 project(hosv4a_sample
-    DESCRIPTION "HOS-V4a sample win32"
+    DESCRIPTION "HOS-V4a sample win32 (cli)"
     LANGUAGES C CXX
 )
 
@@ -79,7 +79,7 @@ add_custom_command(
 
 add_executable(sample
 
-    ${KERNEL_SRC_PROC_DIR}/ksta_ctx.c
+    ${WORKSPACE_ROOT_DIR}/lib/third_party/hos-v4a_modify/ksta_ctx.c
 
     ${CMAKE_BINARY_DIR}/kernel_cfg.c
 

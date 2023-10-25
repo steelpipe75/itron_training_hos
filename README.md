@@ -4,7 +4,7 @@
 
 ## [sample_win32](./sample_win32)
 
-hosのWindows向け実装サンプル(hos-v4a/sample/win/win32)をCMakeを使ってビルド
+hosのWindows向け実装サンプル(hos-v4a/sample/win/win32)をCMakeを使ってビルドするように設定
 
 ## [sample_win32_cli](./sample_win32_cli)
 

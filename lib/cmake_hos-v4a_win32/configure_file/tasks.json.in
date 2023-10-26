@@ -1,0 +1,13 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "build",
+			"type": "shell",
+			"command": "cmd /C cmake --build .",
+			"options": {
+				"cwd": "@CMAKE_BINARY_DIR@"
+			}
+		}
+	]
+}

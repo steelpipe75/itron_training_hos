@@ -1,0 +1,28 @@
+{
+    // IntelliSense を使用して利用可能な属性を学べます。
+    // 既存の属性の説明をホバーして表示します。
+    // 詳細情報は次を確認してください: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "[lldb] Debug",
+            "program": "@CMAKE_BINARY_DIR@/@LAUNCH_JSON_EXE_FILE@",
+            "args": [],
+            "cwd": "@CMAKE_BINARY_DIR@",
+            "preLaunchTask": "build"
+        },
+        {
+            "type": "cppdbg",
+            "request": "launch",
+            "MIMode" : "lldb",
+            "stopAtEntry" : true,
+            "name": "[cppdbg-lldb] Debug",
+            "program": "@CMAKE_BINARY_DIR@/@LAUNCH_JSON_EXE_FILE@",
+            "args": [],
+            "cwd": "@CMAKE_BINARY_DIR@",
+            "preLaunchTask": "build"
+        }
+    ]
+}

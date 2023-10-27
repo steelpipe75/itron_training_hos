@@ -110,3 +110,8 @@ target_compile_options(sample
   PRIVATE $<$<AND:$<CXX_COMPILER_ID:GNU>,$<CONFIG:Release>>:-O3 -DNDEBUG>
 )
 
+#################################################################################
+
+include(${WORKSPACE_ROOT_DIR}/lib/cmake_hos-v4a_win32/configure_file/vs_vscode.cmake)
+vs_and_vscode_helper(sample)
+

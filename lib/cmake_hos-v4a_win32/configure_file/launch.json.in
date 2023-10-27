@@ -5,20 +5,20 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "type": "lldb",
+            "type": "cppdbg",
             "request": "launch",
-            "name": "[lldb] Debug",
+            "MIMode" : "lldb",
+            "stopAtEntry" : true,
+            "name": "[cppdbg-lldb] Debug",
             "program": "@CMAKE_BINARY_DIR@/@LAUNCH_JSON_EXE_FILE@",
             "args": [],
             "cwd": "@CMAKE_BINARY_DIR@",
             "preLaunchTask": "build"
         },
         {
-            "type": "cppdbg",
+            "type": "lldb",
             "request": "launch",
-            "MIMode" : "lldb",
-            "stopAtEntry" : true,
-            "name": "[cppdbg-lldb] Debug",
+            "name": "[lldb] Debug",
             "program": "@CMAKE_BINARY_DIR@/@LAUNCH_JSON_EXE_FILE@",
             "args": [],
             "cwd": "@CMAKE_BINARY_DIR@",

@@ -100,7 +100,7 @@ target_include_directories(sample PRIVATE
     ${WIN32_SAMPLE_DIR}
 )
 
-target_compile_options(h4acfg-win32
+target_compile_options(sample
   PRIVATE $<$<CXX_COMPILER_ID:MSVC>:/W4 /WX- /utf-8>
   PRIVATE $<$<CXX_COMPILER_ID:Clang>:-Wall -Wextra>
   PRIVATE $<$<AND:$<CXX_COMPILER_ID:Clang>,$<CONFIG:Debug>>:-g -O0>

@@ -29,7 +29,7 @@ endif()
 #################################################################################
 
 if(NOT WORKSPACE_ROOT_DIR)
-    set(WORKSPACE_ROOT_DIR "../../..")
+    set(WORKSPACE_ROOT_DIR "${CMAKE_SOURCE_DIR}/../../..")
 endif()
 
 if(NOT ARCH_PROC)

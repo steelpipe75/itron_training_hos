@@ -47,8 +47,6 @@ include(${WORKSPACE_ROOT_DIR}/lib/cmake_hos-v4a_win32/cfgrtr/h4acfg-win32.cmake)
 
 #################################################################################
 
-set(KERNEL_DIR          "${WORKSPACE_ROOT_DIR}/lib/third_party/hos-v4a/kernel")
-
 set(WIN32_SAMPLE_DIR    "${WORKSPACE_ROOT_DIR}/lib/third_party/hos-v4a/sample/win/win32")
 
 find_file(SYSTEM_CONFIG_FILE system.cfg

@@ -27,8 +27,8 @@ jobs:
     - name: Build
       run: cmake --build ${{github.workspace}}/aplfw/sample_win32/build --config ${{env.BUILD_TYPE}}
 
-    - uses: actions/upload-artifact@v3
-      with:
-        name: aplfw-sample_win32.exe
-        path: ${{github.workspace}}/aplfw/sample_win32/build/sample.exe
+#    - uses: actions/upload-artifact@v3
+#      with:
+#        name: aplfw-sample_win32.exe
+#        path: ${{github.workspace}}/aplfw/sample_win32/build/sample.exe
 

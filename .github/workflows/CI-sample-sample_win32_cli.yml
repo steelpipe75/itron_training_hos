@@ -27,3 +27,8 @@ jobs:
     - name: Build
       run: cmake --build ${{github.workspace}}/sample/sample_win32_cli/build --config ${{env.BUILD_TYPE}}
 
+    - uses: actions/upload-artifact@v3
+      with:
+        name: sample-sample_win32_cli.exe
+        path: ${{github.workspace}}/sample/sample_win32_cli/build/sample.exe
+

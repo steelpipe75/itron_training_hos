@@ -1,4 +1,4 @@
-name: sample_win32_cli build
+name: sample sample_win32 build
 
 on:
   push:
@@ -22,8 +22,8 @@ jobs:
         git submodule update --init --recursive --recommend-shallow --depth 1
 
     - name: Configure CMake
-      run: cmake -S ${{github.workspace}}/sample_win32_cli -B ${{github.workspace}}/sample_win32_cli/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
+      run: cmake -S ${{github.workspace}}/sample/sample_win32 -B ${{github.workspace}}/sample/sample_win32/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
 
     - name: Build
-      run: cmake --build ${{github.workspace}}/sample_win32_cli/build --config ${{env.BUILD_TYPE}}
+      run: cmake --build ${{github.workspace}}/sample/sample_win32/build --config ${{env.BUILD_TYPE}}
 

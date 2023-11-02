@@ -11,3 +11,26 @@ cd build
 cmake --build .
 sample.exe
 ```
+
+### サンプルの動作確認
+
+サンプルを起動した状態で  
+VT100エミュレータソフト（TeraTermなど）で  
+ホスト : localhost ポート : 9997  
+に接続
+
+```
+
+================================================================
+ Hyper Operating System  Application Framework
+
+                          Copyright (C) 1998-2010 by Project HOS
+                          http://sourceforge.jp/projects/hos/
+================================================================
+
+%
+
+
+```
+上記起動メッセージが表示されたらコマンドを入力  
+コマンド`help`でコマンド一覧表示  

@@ -343,7 +343,8 @@ endif()
 # Process
 if(${LINK_PROCESS})
     set(PROCESS_DIR ${HOSAPLFW_DIR}/system/process)
-    set(HOSAPLFW_INC_DIR ${HOSAPLFW_INC_DIR} ${PROCESS_DIR})
+    # set(HOSAPLFW_INC_DIR ${HOSAPLFW_INC_DIR} ${PROCESS_DIR})
+    # ↑ Clang でコンパイルしたときに "#include <process.h>" で ${HOSAPLFW_DIR}/system/process/process.h がインクルードされてしまうため無効化
     set(HOSAPLFW_SRCS ${HOSAPLFW_SRCS} ${PROCESS_DIR}/process_create.c)
     set(HOSAPLFW_SRCS ${HOSAPLFW_SRCS} ${PROCESS_DIR}/process_createex.c)
     set(HOSAPLFW_SRCS ${HOSAPLFW_SRCS} ${PROCESS_DIR}/process_delete.c)

@@ -77,14 +77,14 @@ add_custom_command(
 
 add_executable(sample
 
-    ${WORKSPACE_ROOT_DIR}/lib/third_party/hos-v4a_modify/ksta_ctx.c
+    ${WORKSPACE_ROOT_DIR}/lib/third_party/hos-v4a_modify/kernel/ksta_ctx.c
 
     ${CMAKE_BINARY_DIR}/kernel_cfg.c
 
     ${WIN32_SAMPLE_DIR}/main.c
     ${WIN32_SAMPLE_DIR}/sample.c
     ${WIN32_SAMPLE_DIR}/ostimer.c
-    ${WIN32_SAMPLE_DIR}/wintimer.c
+    ${WORKSPACE_ROOT_DIR}/lib/third_party/hos-v4a_modify/sample/wintimer.c
 )
 
 target_link_libraries(sample hosv4a winmm)

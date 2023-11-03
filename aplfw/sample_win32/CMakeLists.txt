@@ -86,7 +86,7 @@ add_executable(sample
     ${APLFW_WIN32_SAMPLE_DIR}/main.c
     ${APLFW_WIN32_SAMPLE_DIR}/boot.c
     ${APLFW_WIN32_SAMPLE_DIR}/ostimer.c
-    ${APLFW_WIN32_SAMPLE_DIR}/wintimer.c
+    ${WORKSPACE_ROOT_DIR}/lib/third_party/hos-v4a_modify/aplfw/wintimer.c
 )
 
 target_link_libraries(sample hosv4a hosaplfw ws2_32 winmm)

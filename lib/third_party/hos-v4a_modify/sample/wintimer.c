@@ -38,7 +38,11 @@ static HANDLE hEventTimer;								/**< %jp{タイマハンドル} */
 /** %jp{OS用タイマの初期化} */
 void WinTimer_Start(INHNO inhno, int iInterval)
 {
+#if 1
+	unsigned dwThreadId;
+#else
 	DWORD dwThreadId;
+#endif
 		
 	/* %jp{タイマ用イベントの作成} */
 	hEventTimer = CreateEvent(NULL, FALSE, FALSE, NULL);

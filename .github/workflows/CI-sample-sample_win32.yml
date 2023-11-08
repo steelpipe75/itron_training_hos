@@ -22,13 +22,13 @@ jobs:
         git submodule update --init --recursive --recommend-shallow --depth 1
 
     - name: Configure CMake
-      run: cmake -S ${{github.workspace}}/sample/sample_win32 -B ${{github.workspace}}/sample/sample_win32/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
+      run: cmake -S ${{github.workspace}}/hos_sample_cmake/sample/sample_win32 -B ${{github.workspace}}/hos_sample_cmake/sample/sample_win32/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
 
     - name: Build
-      run: cmake --build ${{github.workspace}}/sample/sample_win32/build --config ${{env.BUILD_TYPE}}
+      run: cmake --build ${{github.workspace}}/hos_sample_cmake/sample/sample_win32/build --config ${{env.BUILD_TYPE}}
 
 #    - uses: actions/upload-artifact@v3
 #      with:
 #        name: sample-sample_win32.exe
-#        path: ${{github.workspace}}/sample/sample_win32/build/sample.exe
+#        path: ${{github.workspace}}/hos_sample_cmake/sample/sample_win32/build/sample.exe
 

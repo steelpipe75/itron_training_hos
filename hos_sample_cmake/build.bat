@@ -14,3 +14,5 @@ cmake -B      ./sample/sample_win32_cli/build/Ninja  -S ./sample/sample_win32_cl
 cmake --build ./sample/sample_win32_cli/build/Ninja
 cmake -B      ./sample/sample_win32_cli/build/VS2017 -S ./sample/sample_win32_cli -G "Visual Studio 15 2017"
 cmake --build ./sample/sample_win32_cli/build/VS2017
+
+cmd /k

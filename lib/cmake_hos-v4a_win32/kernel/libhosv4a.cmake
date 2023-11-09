@@ -283,6 +283,10 @@ set(KERNEL_SRCS ${KERNEL_SRCS}
 
 #################################################################################
 
+if(NOT HOSV4A_KSTA_CTX_PATH)
+    set(HOSV4A_KSTA_CTX_PATH "${KERNEL_SRC_PROC_DIR}/ksta_ctx.c")
+endif()
+
 add_library(hosv4a STATIC
     ${KERNEL_SRCS}
     # ${KERNEL_SRC_PROC_DIR}/kcre_ctx.c
@@ -292,6 +296,7 @@ add_library(hosv4a STATIC
     ${KERNEL_SRC_PROC_DIR}/kini_prc.c
     ${KERNEL_SRC_PROC_DIR}/krst_ctx.c
     # ${KERNEL_SRC_PROC_DIR}/ksta_ctx.c
+    ${HOSV4A_KSTA_CTX_PATH}
     ${KERNEL_SRC_PROC_DIR}/kswi_ctx.c
     ${KERNEL_SRC_PROC_DIR}/kwai_int.c
     ${KERNEL_SRC_PROC_DIR}/val_int.c

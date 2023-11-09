@@ -42,6 +42,7 @@ endif()
 
 #################################################################################
 
+set(HOSV4A_KSTA_CTX_PATH "${WORKSPACE_ROOT_DIR}/lib/third_party/hos-v4a_modify/kernel/ksta_ctx.c")
 include(${WORKSPACE_ROOT_DIR}/lib/cmake_hos-v4a_win32/kernel/libhosv4a.cmake)
 include(${WORKSPACE_ROOT_DIR}/lib/cmake_hos-v4a_win32/cfgrtr/h4acfg-win32.cmake)
 
@@ -76,8 +77,6 @@ add_custom_command(
 )
 
 add_executable(sample
-
-    ${WORKSPACE_ROOT_DIR}/lib/third_party/hos-v4a_modify/kernel/ksta_ctx.c
 
     ${CMAKE_BINARY_DIR}/kernel_cfg.c
 

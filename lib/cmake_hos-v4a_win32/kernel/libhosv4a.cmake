@@ -291,6 +291,7 @@ add_library(hosv4a STATIC
     ${KERNEL_SRC_PROC_DIR}/kena_int.c
     ${KERNEL_SRC_PROC_DIR}/kini_prc.c
     ${KERNEL_SRC_PROC_DIR}/krst_ctx.c
+    # ${KERNEL_SRC_PROC_DIR}/ksta_ctx.c
     ${KERNEL_SRC_PROC_DIR}/kswi_ctx.c
     ${KERNEL_SRC_PROC_DIR}/kwai_int.c
     ${KERNEL_SRC_PROC_DIR}/val_int.c

@@ -283,8 +283,18 @@ set(KERNEL_SRCS ${KERNEL_SRCS}
 
 #################################################################################
 
-if(NOT HOSV4A_KSTA_CTX_PATH)
-    set(HOSV4A_KSTA_CTX_PATH "${KERNEL_SRC_PROC_DIR}/ksta_ctx.c")
+if(NOT HOSV4A_USE_MESSAGEBOX)
+    set(HOSV4A_USE_MESSAGEBOX OFF)
+endif()
+
+if(HOSV4A_USE_MESSAGEBOX)
+    set(KERNEL_SRCS ${KERNEL_SRCS}
+        ${WORKSPACE_ROOT_DIR}/lib/third_party/hos-v4a_modify/kernel/ksta_ctx.c
+    )
+else()
+    set(KERNEL_SRCS ${KERNEL_SRCS}
+        ${KERNEL_SRC_PROC_DIR}/ksta_ctx.c
+    )
 endif()
 
 add_library(hosv4a STATIC
@@ -295,8 +305,7 @@ add_library(hosv4a STATIC
     ${KERNEL_SRC_PROC_DIR}/kena_int.c
     ${KERNEL_SRC_PROC_DIR}/kini_prc.c
     ${KERNEL_SRC_PROC_DIR}/krst_ctx.c
-    # ${KERNEL_SRC_PROC_DIR}/ksta_ctx.c
-    ${HOSV4A_KSTA_CTX_PATH}
+    # ${KERNEL_SRC_PROC_DIR}/ksta_ctx.c # 先に${KERNEL_SRCS}に設定済み
     ${KERNEL_SRC_PROC_DIR}/kswi_ctx.c
     ${KERNEL_SRC_PROC_DIR}/kwai_int.c
     ${KERNEL_SRC_PROC_DIR}/val_int.c

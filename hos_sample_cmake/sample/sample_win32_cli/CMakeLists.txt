@@ -42,7 +42,7 @@ endif()
 
 #################################################################################
 
-set(HOSV4A_KSTA_CTX_PATH "${WORKSPACE_ROOT_DIR}/lib/third_party/hos-v4a_modify/kernel/ksta_ctx.c")
+set(HOSV4A_USE_MESSAGEBOX ON)
 include(${WORKSPACE_ROOT_DIR}/lib/cmake_hos-v4a_win32/kernel/libhosv4a.cmake)
 include(${WORKSPACE_ROOT_DIR}/lib/cmake_hos-v4a_win32/cfgrtr/h4acfg-win32.cmake)
 

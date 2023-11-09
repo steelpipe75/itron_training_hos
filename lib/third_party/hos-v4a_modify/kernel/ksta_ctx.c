@@ -29,7 +29,7 @@ void _kernel_sta_ctx(_KERNEL_T_CTXCB *ctxcb)
 	/* %jp{スレッドの実行開始} */
 	SetEvent(ctxcb->hEvent);
 	
-	if (GetCurrentThreadId() == _kernel_ictxcb.dwPrimaryThreadId)
+	if ( GetCurrentThreadId() == _kernel_ictxcb.dwPrimaryThreadId )
 	{
 #if 1
 		printf("#### Hit Space Key to Exit ####\n");
@@ -43,7 +43,7 @@ void _kernel_sta_ctx(_KERNEL_T_CTXCB *ctxcb)
 		/* %jp{ダイアログを表示} */
 		MessageBox(NULL, _T("Press OK, Exit a process"), _T("Hyper Operationg System V4 Advance for Win32"), MB_OK);
 #endif
-
+		
 		/* %jp{終了} */
 		ExitProcess(0);
 	}

@@ -295,7 +295,8 @@ add_library(hosv4a_ex STATIC
     ${WORKSPACE_ROOT_DIR}/lib/third_party/hos-v4a_modify/kernel/kcre_ctx.c
     ${KERNEL_SRC_PROC_DIR}/kdis_int.c
     ${KERNEL_SRC_PROC_DIR}/kena_int.c
-    ${KERNEL_SRC_PROC_DIR}/kini_prc.c
+    # ${KERNEL_SRC_PROC_DIR}/kini_prc.c
+    ${KERNEL_EXT_SRC_DIR}/kini_prc.c
     ${KERNEL_SRC_PROC_DIR}/krst_ctx.c
     # ${KERNEL_SRC_PROC_DIR}/ksta_ctx.c
     ${KERNEL_EXT_SRC_DIR}/ksta_ctx.c

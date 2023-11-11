@@ -29,4 +29,4 @@ jobs:
 
     - name: Run
       working-directory: ${{github.workspace}}/dev/vter_knl/build/
-      run: .\sample.exe
+      run: & .\sample.exe

@@ -16,7 +16,6 @@ static void drive_hos(void) {
 
 static void drive_gtest(void) {
 	gtest_result = RUN_ALL_TESTS();
-	vter_knl();
 	gtest_is_done = true;
 }
 
@@ -28,7 +27,7 @@ int main(int argc, char **argv) {
 	std::thread th_gtest(drive_gtest);
 	th_gtest.detach();
 
-	while(!gtest_is_done || !hos_is_done) {
+	while(!gtest_is_done && !hos_is_done) {
 		_sleep(1000);
 	}
 

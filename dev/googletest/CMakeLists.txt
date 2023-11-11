@@ -87,6 +87,7 @@ add_executable(sample
     ${CMAKE_BINARY_DIR}/kernel_cfg.c
 
     gtest_hos_main.cpp
+    sample_test.cpp
     ${WORKSPACE_ROOT_DIR}/lib/third_party/hos-v4a_modify/sample/sample_for_unittest.c
     ${WIN32_SAMPLE_DIR}/ostimer.c
     ${WORKSPACE_ROOT_DIR}/lib/third_party/hos-v4a_modify/sample/wintimer.c

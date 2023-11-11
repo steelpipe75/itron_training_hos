@@ -20,11 +20,20 @@
 #include "kernel.h"
 #include "kernel_id.h"
 #include "wintimer.h"
+#if 1
+#include <string.h>
+#endif
 
 
 #define LEFT(num)	((num) <= 1 ? 5 : (num) - 1)
 #define RIGHT(num)	((num) >= 5 ? 1 : (num) + 1)
 
+#if 1
+	#define EVT_UNKNOWN		((int)0)
+	#define EVT_THINKING	((int)1)
+	#define EVT_HUNGRY		((int)2)
+	#define EVT_EATING		((int)3)
+#endif
 
 ID mbxid;
 ID mpfid;
@@ -34,9 +43,16 @@ ID mpfid;
 typedef struct t_print_msg
 {
 	T_MSG msg;
+#if 1
+	int   num;
+	int   event;
+#endif
 	char  text[32];
 } T_PRINT_MSG;
 
+#if 1
+	static int eat_count[5] = {0, 0, 0, 0, 0};
+#endif
 
 /** %jp{初期化ハンドラ} */
 void Sample_Initialize(VP_INT exinf)
@@ -86,6 +102,19 @@ void print_state(int num, char *text)
 
 	/* %jp{文字列生成} */
 	sprintf(msg->text, "%d : %s", num, text);
+#if 1
+	msg->num = num;
+	if(strcmp("thinking", text) ==0){
+		msg->event = EVT_THINKING;
+	}else if(strcmp("hungry", text) ==0){
+		msg->event = EVT_HUNGRY;
+	}else if(strcmp("eating", text) ==0){
+		msg->event = EVT_EATING;
+	}else{
+		msg->event = EVT_UNKNOWN;
+		vter_knl();
+	}
+#endif
 
 	/* %jp{表示タスクに送信} */
 	snd_mbx(mbxid, (T_MSG *)msg);
@@ -139,13 +168,13 @@ void Sample_Task(VP_INT exinf)
 		
 		/* %jp{適当な時間、食べる} */
 		print_state(num, "eating");
+		rand_wait();
 #if 1
 		eat_count++;
 		if(eat_count >= 5){
 			vter_knl();
 		}
 #endif
-		rand_wait();
 		
 		/* %jp{フォークを置く} */
 		sig_sem(LEFT(num));
@@ -163,10 +192,26 @@ void Sample_Print(VP_INT exinf)
 	{
 		rcv_mbx(mbxid, (T_MSG **)&msg);
 		printf("%s\n", msg->text);
+#if 1
+		if(msg->event == EVT_EATING){
+			if((1 <= msg->num) && (msg->num <= 5)){
+				eat_count[msg->num - 1]++;
+			}
+		}
+#endif
 		rel_mpf(mpfid, msg);
 	}
 }
 
+#if 1
+int get_eat_count(int num){
+	int ret = 0;
+	if((1 <= num) && (num <= 5)){
+		ret = eat_count[num - 1];
+	}
+	return ret;
+}
+#endif
 
 
 /* end of file */

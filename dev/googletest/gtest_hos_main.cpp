@@ -14,6 +14,12 @@ static void drive_hos(void) {
 	hos_is_done = true;
 }
 
+void wait_for_hos(void) {
+	while(!hos_is_done) {
+		_sleep(1000);
+	}
+}
+
 static void drive_gtest(void) {
 	gtest_result = RUN_ALL_TESTS();
 	gtest_is_done = true;

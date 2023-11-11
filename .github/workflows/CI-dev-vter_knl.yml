@@ -27,6 +27,3 @@ jobs:
     - name: Build
       run: cmake --build ${{github.workspace}}/dev/vter_knl/build --config ${{env.BUILD_TYPE}}
 
-    - name: Run
-      working-directory: ${{github.workspace}}/dev/vter_knl/build/
-      run: & .\sample.exe

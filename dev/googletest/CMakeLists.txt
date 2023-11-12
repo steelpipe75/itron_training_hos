@@ -16,7 +16,7 @@ if(${CMAKE_SOURCE_DIR} STREQUAL ${CMAKE_BINARY_DIR})
 endif()
 
 set(default_test_mode "ON")
-if(NOT TEST_MODE)
+if(NOT DEFINED TEST_MODE)
     message(STATUS "Setting test mode to '${default_test_mode}' as none was specified.")
     set(TEST_MODE ${default_test_mode})
 endif()

@@ -17,10 +17,11 @@ endif()
 
 set(default_test_mode "ON")
 if(NOT TEST_MODE)
+    message(STATUS "Setting test mode to '${default_test_mode}' as none was specified.")
     set(TEST_MODE ${default_test_mode})
 endif()
 
-if(TEST_MODE)
+if(${TEST_MODE})
     enable_testing()
 endif()
 
@@ -126,7 +127,7 @@ target_compile_options(sample
 
 #################################################################################
 
-if(TEST_MODE)
+if(${TEST_MODE})
     gtest_discover_tests(sample)
 endif()
 

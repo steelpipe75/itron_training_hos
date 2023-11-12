@@ -15,7 +15,14 @@ if(${CMAKE_SOURCE_DIR} STREQUAL ${CMAKE_BINARY_DIR})
     message(FATAL_ERROR "In-source builds not allowed. Please make a new directory (called a build directory) and run CMake from there. You may need to remove CMakeCache.txt. ")
 endif()
 
-enable_testing()
+set(default_test_mode "ON")
+if(NOT TEST_MODE)
+    set(TEST_MODE ${default_test_mode})
+endif()
+
+if(TEST_MODE)
+    enable_testing()
+endif()
 
 #################################################################################
 
@@ -119,7 +126,9 @@ target_compile_options(sample
 
 #################################################################################
 
-gtest_discover_tests(sample)
+if(TEST_MODE)
+    gtest_discover_tests(sample)
+endif()
 
 #################################################################################
 

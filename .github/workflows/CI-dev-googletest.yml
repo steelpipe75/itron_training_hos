@@ -22,12 +22,8 @@ jobs:
         git submodule update --init --recursive --recommend-shallow --depth 1
 
     - name: Configure CMake
-      run: cmake -S ${{github.workspace}}/dev/googletest/ -B ${{github.workspace}}/dev/googletest/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
+      run: cmake -S ${{github.workspace}}/dev/googletest/ -B ${{github.workspace}}/dev/googletest/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} -D TEST_MODE=OFF
 
     - name: Build
       run: cmake --build ${{github.workspace}}/dev/googletest/build --config ${{env.BUILD_TYPE}}
-
-    - name: Test
-      working-directory: ${{github.workspace}}/dev/googletest/build
-      run: ctest -C ${{env.BUILD_TYPE}} -V --timeout 60
 

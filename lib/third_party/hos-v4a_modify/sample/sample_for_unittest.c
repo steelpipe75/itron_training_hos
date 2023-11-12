@@ -37,6 +37,12 @@
 
 ID mbxid;
 ID mpfid;
+#if 1
+ID flgid_gtest;
+ID tskid_gtest;
+int stk_gtest[1024 * 4] = {0};
+extern void drive_gtest(VP_INT exinf);
+#endif
 
 
 /** %jp{メッセージ構造体} */
@@ -59,6 +65,10 @@ void Sample_Initialize(VP_INT exinf)
 {
 	T_CMPF cmpf;
 	T_CMBX cmbx;
+#if 1
+	T_CFLG cflg;
+	T_CTSK ctsk;
+#endif
 	
 	/* %jp{固定長メモリプール生成} */
 	cmpf.mpfatr = TA_TFIFO;					
@@ -72,6 +82,22 @@ void Sample_Initialize(VP_INT exinf)
 	cmbx.maxmpri = 1;						
 	cmbx.mprihd  = NULL;					
 	mbxid = acre_mbx(&cmbx);
+#if 1
+
+	/* %jp{フラグ生成} */
+	cflg.flgatr  = TA_TFIFO | TA_WMUL;
+	cflg.iflgptn = 0;
+	flgid_gtest = acre_flg(&cflg);
+
+	/* %jp{タスク生成} */
+	ctsk.tskatr  = TA_HLNG;
+	ctsk.exinf   = 0;
+	ctsk.task    = drive_gtest;
+	ctsk.itskpri = 1;
+	ctsk.stksz   = sizeof(stk_gtest);
+	ctsk.stk     = stk_gtest;
+	tskid_gtest = acre_tsk(&ctsk);
+#endif
 
 	/* %jp{タスク起動} */
 	act_tsk(TSKID_PRINT);
@@ -80,6 +106,9 @@ void Sample_Initialize(VP_INT exinf)
 	act_tsk(TSKID_SAMPLE3);
 	act_tsk(TSKID_SAMPLE4);
 	act_tsk(TSKID_SAMPLE5);
+#if 1
+	act_tsk(tskid_gtest);
+#endif
 }
 
 
@@ -172,7 +201,7 @@ void Sample_Task(VP_INT exinf)
 #if 1
 		eat_count++;
 		if(eat_count >= 5){
-			vter_knl();
+			set_flg(flgid_gtest, 1);
 		}
 #endif
 		
@@ -210,6 +239,11 @@ int get_eat_count(int num){
 		ret = eat_count[num - 1];
 	}
 	return ret;
+}
+
+void wait_eating(void){
+	FLGPTN  iflgptn = 0;
+	wai_flg(flgid_gtest, 1, TWF_ANDW, &iflgptn);
 }
 #endif
 

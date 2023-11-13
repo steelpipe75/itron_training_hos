@@ -42,10 +42,18 @@ typedef struct _kernel_t_ctxcb
 	BOOL				blInterrupt;		/**< %jp{割込み処理中フラグ} */
 	HANDLE				hEvent;				/**< %jp{イベントハンドル} */
 	HANDLE				hThread;			/**< %jp{スレッドハンドル} */
+#if 1
+	unsigned			dwThreadId;			/**< %jp{スレッドID} */
+#else
 	DWORD				dwThreadId;			/**< %jp{スレッドID} */
+#endif
 	HANDLE				hIntEvent;			/**< %jp{イベントハンドル} */
 	HANDLE				hIntThread;			/**< %jp{スレッドハンドル} */
+#if 1
+	unsigned			dwIntThreadId;		/**< %jp{スレッドID} */
+#else
 	DWORD				dwIntThreadId;		/**< %jp{スレッドID} */
+#endif
 } _KERNEL_T_CTXCB;
 
 

@@ -96,7 +96,7 @@ add_executable(sample
 
     ${CMAKE_BINARY_DIR}/kernel_cfg.c
 
-    my_rand.cpp
+    mock_my_rand.cpp
     gmock_hos_main.cpp
     sample_test.cpp
     ${WORKSPACE_ROOT_DIR}/lib/third_party/hos-v4a_modify/sample/sample_for_unittest.c

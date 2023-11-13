@@ -39,7 +39,11 @@ const T_DRVOBJ_METHODS  WinSockDrv_Methods =
 /** コンストラクタ */
 FILE_ERR WinSockDrv_Constructor(C_WINSOCKDRV *self, const T_DRVOBJ_METHODS *pMethods, int iPortNum, int iIntNum, int iBufSize)
 {
+#if 1
+	unsigned	dwThreadId;
+#else
 	DWORD		dwThreadId;
+#endif
 	FILE_ERR	ErrCode;
 	void		*pRecvMem;
 	void		*pSendMem;

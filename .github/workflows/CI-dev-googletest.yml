@@ -1,0 +1,29 @@
+name: dev googletest build and run
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+env:
+  BUILD_TYPE: Release
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Checkout Submodules
+      run: |
+        git config --global http.postBuffer 100M
+        git submodule update --init --recursive --recommend-shallow --depth 1
+
+    - name: Configure CMake
+      run: cmake -S ${{github.workspace}}/dev/googletest/ -B ${{github.workspace}}/dev/googletest/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} -D TEST_MODE=OFF
+
+    - name: Build
+      run: cmake --build ${{github.workspace}}/dev/googletest/build --config ${{env.BUILD_TYPE}}
+

@@ -1,4 +1,4 @@
-name: dev vter_knl build and run
+name: dev build and run
 
 on:
   push:
@@ -10,7 +10,12 @@ env:
   BUILD_TYPE: Release
 
 jobs:
+
   build:
+    strategy:
+      matrix:
+        lib: [vter_knl, googletest, googlemock]
+
     runs-on: windows-latest
 
     steps:
@@ -22,8 +27,8 @@ jobs:
         git submodule update --init --recursive --recommend-shallow --depth 1
 
     - name: Configure CMake
-      run: cmake -S ${{github.workspace}}/dev/vter_knl/ -B ${{github.workspace}}/dev/vter_knl/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
+      run: cmake -S ${{github.workspace}}/dev/${{matrix.lib}}/ -B ${{github.workspace}}/dev/${{matrix.lib}}/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
 
     - name: Build
-      run: cmake --build ${{github.workspace}}/dev/vter_knl/build --config ${{env.BUILD_TYPE}}
+      run: cmake --build ${{github.workspace}}/dev/${{matrix.lib}}/build --config ${{env.BUILD_TYPE}}
 

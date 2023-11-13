@@ -22,6 +22,7 @@
 #include "wintimer.h"
 #if 1
 #include <string.h>
+#include "my_rand.h"
 #endif
 
 
@@ -115,7 +116,11 @@ void Sample_Initialize(VP_INT exinf)
 /** %jp{適当な時間待つ} */
 void rand_wait(void)
 {
+#if 1
+	dly_tsk(my_rand() % 1000 + 100);	
+#else
 	dly_tsk(rand() % 1000 + 100);	
+#endif
 }
 
 

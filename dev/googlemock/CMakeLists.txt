@@ -96,6 +96,7 @@ add_executable(sample
 
     ${CMAKE_BINARY_DIR}/kernel_cfg.c
 
+    my_rand.cpp
     gmock_hos_main.cpp
     sample_test.cpp
     ${WORKSPACE_ROOT_DIR}/lib/third_party/hos-v4a_modify/sample/sample_for_unittest.c
@@ -106,6 +107,7 @@ add_executable(sample
 target_link_libraries(sample hosv4a_ex winmm gmock)
 
 target_include_directories(sample PRIVATE
+    .
     ${H4ACFG_INC_DIR}
     ${KERNEL_EXT_INC_DIR}
     ${KERNEL_INC_DIR}

@@ -1,0 +1,29 @@
+name: hos cfgrtr build and run
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+env:
+  BUILD_TYPE: Release
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Checkout Submodules
+      run: |
+        git config --global http.postBuffer 100M
+        git submodule update --init --recursive --recommend-shallow --depth 1
+
+    - name: Configure CMake
+      run: cmake -S ${{github.workspace}}/cmake_hos-v4a_win32/cfgrtr/ -B ${{github.workspace}}/cmake_hos-v4a_win32/cfgrtr/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
+
+    - name: Build
+      run: cmake --build ${{github.workspace}}/cmake_hos-v4a_win32/cfgrtr/build --config ${{env.BUILD_TYPE}}
+

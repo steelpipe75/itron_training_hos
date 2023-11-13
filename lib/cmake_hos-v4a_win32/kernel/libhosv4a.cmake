@@ -313,6 +313,7 @@ add_library(hosv4a STATIC
 )
 
 target_include_directories(hosv4a PRIVATE
+    ${WORKSPACE_ROOT_DIR}/lib/third_party/hos-v4a_modify/kernel/inc
     ${KERNEL_INC_DIR}
     ${KERNEL_INC_PROC_DIR}
     ${KERNEL_INC_IRC_DIR}

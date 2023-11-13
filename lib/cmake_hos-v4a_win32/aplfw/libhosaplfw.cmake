@@ -1311,12 +1311,8 @@ target_include_directories(hosaplfw PRIVATE
     ${HOSAPLFW_INC_DIR}
 )
 
-target_compile_options(hosaplfw
-  PRIVATE $<$<CXX_COMPILER_ID:MSVC>:/W4 /WX- /utf-8>
-  PRIVATE $<$<CXX_COMPILER_ID:Clang>:-Wall -Wextra>
-  PRIVATE $<$<AND:$<CXX_COMPILER_ID:Clang>,$<CONFIG:Debug>>:-g -O0>
-  PRIVATE $<$<AND:$<CXX_COMPILER_ID:Clang>,$<CONFIG:Release>>:-O3 -DNDEBUG>
-  PRIVATE $<$<CXX_COMPILER_ID:GNU>:-Wall>
-  PRIVATE $<$<AND:$<CXX_COMPILER_ID:GNU>,$<CONFIG:Debug>>:-g -O0>
-  PRIVATE $<$<AND:$<CXX_COMPILER_ID:GNU>,$<CONFIG:Release>>:-O3 -DNDEBUG>
-)
+#################################################################################
+
+include(${WORKSPACE_ROOT_DIR}/lib/cmake_hos-v4a_win32/compile_option/compile_opion_helper.cmake)
+target_compile_options_helper(hosaplfw) 
+

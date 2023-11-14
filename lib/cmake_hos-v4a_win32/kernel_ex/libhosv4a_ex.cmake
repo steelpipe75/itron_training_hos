@@ -12,9 +12,9 @@ set(KERNEL_INC_PROC_DIR "${KERNEL_INC_DIR}/arch/proc/${ARCH_PROC}")
 set(KERNEL_INC_IRC_DIR  "${KERNEL_INC_DIR}/arch/irc/${ARCH_IRC}")
 set(KERNEL_SRC_PROC_DIR "${KERNEL_SRC_DIR}/arch/proc/${ARCH_PROC}")
 
-set(KERNEL_EXT_DIR      "${WORKSPACE_ROOT_DIR}/lib/third_party/hos-v4a_modify/extension/")
-set(KERNEL_EXT_SRC_DIR  "${KERNEL_EXT_DIR}/src/")
-set(KERNEL_EXT_INC_DIR  "${KERNEL_EXT_DIR}/inc/")
+set(KERNEL_EXT_DIR      "${WORKSPACE_ROOT_DIR}/lib/third_party/hos-v4a_modify/extension/kernel")
+set(KERNEL_EXT_SRC_DIR  "${KERNEL_EXT_DIR}/source")
+set(KERNEL_EXT_INC_DIR  "${KERNEL_EXT_DIR}/include")
 
 
 # Dispatcher
@@ -117,7 +117,7 @@ set(KERNEL_SRCS ${KERNEL_SRCS}
     ${SYSOBJ_DIR}/dis_dsp.c
     ${SYSOBJ_DIR}/sns_dsp.c
     ${SYSOBJ_DIR}/sns_ctx.c
-    ${KERNEL_EXT_SRC_DIR}/ter_knl.c
+    ${KERNEL_EXT_SRC_DIR}/object/sys/ter_knl.c
 )
 
 # Tasks
@@ -296,18 +296,19 @@ add_library(hosv4a_ex STATIC
     ${KERNEL_SRC_PROC_DIR}/kdis_int.c
     ${KERNEL_SRC_PROC_DIR}/kena_int.c
     # ${KERNEL_SRC_PROC_DIR}/kini_prc.c
-    ${KERNEL_EXT_SRC_DIR}/kini_prc.c
+    ${KERNEL_EXT_SRC_DIR}/arch/proc/win/win32/kini_prc.c
     ${KERNEL_SRC_PROC_DIR}/krst_ctx.c
     # ${KERNEL_SRC_PROC_DIR}/ksta_ctx.c
-    ${KERNEL_EXT_SRC_DIR}/ksta_ctx.c
+    ${KERNEL_EXT_SRC_DIR}/arch/proc/win/win32/ksta_ctx.c
     ${KERNEL_SRC_PROC_DIR}/kswi_ctx.c
     ${KERNEL_SRC_PROC_DIR}/kwai_int.c
     ${KERNEL_SRC_PROC_DIR}/val_int.c
     ${KERNEL_SRC_PROC_DIR}/vsig_int.c
-    ${KERNEL_EXT_SRC_DIR}/kter_ctx.c
+    ${KERNEL_EXT_SRC_DIR}/arch/proc/win/win32/kter_ctx.c
 )
 
 target_include_directories(hosv4a_ex PRIVATE
+    ${KERNEL_EXT_INC_DIR}/arch/proc/win/win32
     ${KERNEL_EXT_INC_DIR}
     ${KERNEL_INC_DIR}
     ${KERNEL_INC_PROC_DIR}

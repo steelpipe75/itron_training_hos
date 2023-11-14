@@ -289,7 +289,7 @@ endif()
 
 if(HOSV4A_USE_MESSAGEBOX)
     set(KERNEL_SRCS ${KERNEL_SRCS}
-        ${WORKSPACE_ROOT_DIR}/lib/third_party/hos-v4a_modify/kernel/src/ksta_ctx.c
+        ${WORKSPACE_ROOT_DIR}/lib/third_party/hos-v4a_modify/kernel/source/arch/proc/win/win32/ksta_ctx.c
     )
 else()
     set(KERNEL_SRCS ${KERNEL_SRCS}
@@ -300,7 +300,7 @@ endif()
 add_library(hosv4a STATIC
     ${KERNEL_SRCS}
     # ${KERNEL_SRC_PROC_DIR}/kcre_ctx.c
-    ${WORKSPACE_ROOT_DIR}/lib/third_party/hos-v4a_modify/kernel/src/kcre_ctx.c
+    ${WORKSPACE_ROOT_DIR}/lib/third_party/hos-v4a_modify/kernel/source/arch/proc/win/win32/kcre_ctx.c
     ${KERNEL_SRC_PROC_DIR}/kdis_int.c
     ${KERNEL_SRC_PROC_DIR}/kena_int.c
     ${KERNEL_SRC_PROC_DIR}/kini_prc.c
@@ -313,7 +313,7 @@ add_library(hosv4a STATIC
 )
 
 target_include_directories(hosv4a PRIVATE
-    ${WORKSPACE_ROOT_DIR}/lib/third_party/hos-v4a_modify/kernel/inc
+    ${WORKSPACE_ROOT_DIR}/lib/third_party/hos-v4a_modify/kernel/include/arch/proc/win/win32
     ${KERNEL_INC_DIR}
     ${KERNEL_INC_PROC_DIR}
     ${KERNEL_INC_IRC_DIR}

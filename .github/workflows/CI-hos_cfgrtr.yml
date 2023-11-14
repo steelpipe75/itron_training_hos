@@ -1,4 +1,4 @@
-name: hos cfgrtr build and run
+name: hos cfgrtr build
 
 on:
   push:

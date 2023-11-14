@@ -1,4 +1,4 @@
-name: hos lib build and run
+name: hos lib build
 
 on:
   push:

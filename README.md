@@ -9,7 +9,7 @@ CMake に出力させたVisual Studioの.slnファイルを使ってデバッグ
 ALL_BUILDではなく、add_executable()で指定した実行ファイルをスタートアッププロジェクトに設定すること  
 （ソリューションエクスプローラーの右クリックメニューから設定できる）
 
-## CMake を使ったサンプルのビルド
+## CMake を使った hos-v4a サンプル のビルド
 
 ### [./sample/sample_win32](./sample/sample_win32/README.md)
 

@@ -44,7 +44,10 @@ void _kernel_cre_ctx(
 
 #if 1
 	ctxcb->hThread    = (HANDLE)_beginthreadex(NULL, 0, _kernel_ctx_ent, (void *)ctxcb, 0, &ctxcb->dwThreadId);
+	SetThreadName(ctxcb->dwThreadId, "_kernel_cre_ctx:ctxcb->dwThreadId");
+
 	ctxcb->hIntThread = (HANDLE)_beginthreadex(NULL, 0, _kernel_ctx_int, (void *)ctxcb, 0, &ctxcb->dwIntThreadId);
+	SetThreadName(ctxcb->dwIntThreadId, "_kernel_cre_ctx:ctxcb->dwIntThreadId");
 #else
 #if defined(_MSC_VER)	/* Visual-C++ の場合 */
 	ctxcb->hThread    = (HANDLE)_beginthreadex(NULL, 0, _kernel_ctx_ent, (void *)ctxcb, 0, &ctxcb->dwThreadId);

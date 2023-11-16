@@ -42,9 +42,12 @@ endif()
 
 #################################################################################
 
+add_subdirectory(${WORKSPACE_ROOT_DIR}/lib/cmake_hos-v4a_win32/cfgrtr cfgrtr)
+
+#################################################################################
+
 set(HOSV4A_USE_MESSAGEBOX ON)
 include(${WORKSPACE_ROOT_DIR}/lib/cmake_hos-v4a_win32/kernel/libhosv4a.cmake)
-include(${WORKSPACE_ROOT_DIR}/lib/cmake_hos-v4a_win32/cfgrtr/h4acfg-win32.cmake)
 
 #################################################################################
 

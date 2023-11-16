@@ -52,8 +52,11 @@ endif()
 
 #################################################################################
 
+add_subdirectory(${WORKSPACE_ROOT_DIR}/lib/cmake_hos-v4a_win32/cfgrtr cfgrtr)
+
+#################################################################################
+
 include(${WORKSPACE_ROOT_DIR}/lib/cmake_hos-v4a_win32/kernel_ex/libhosv4a_ex.cmake)
-include(${WORKSPACE_ROOT_DIR}/lib/cmake_hos-v4a_win32/cfgrtr/h4acfg-win32.cmake)
 
 #################################################################################
 

@@ -42,10 +42,12 @@ endif()
 
 #################################################################################
 
-set(LINK_WINSOCK YES)
+add_subdirectory(${WORKSPACE_ROOT_DIR}/lib/cmake_hos-v4a_win32/cfgrtr cfgrtr)
 
+#################################################################################
+
+set(LINK_WINSOCK YES)
 include(${WORKSPACE_ROOT_DIR}/lib/cmake_hos-v4a_win32/aplfw/libhosaplfw.cmake)
-include(${WORKSPACE_ROOT_DIR}/lib/cmake_hos-v4a_win32/cfgrtr/h4acfg-win32.cmake)
 
 #################################################################################
 

@@ -292,7 +292,7 @@ set(KERNEL_SRCS ${KERNEL_SRCS}
 add_library(hosv4a_ex STATIC
     ${KERNEL_SRCS}
     # ${KERNEL_SRC_PROC_DIR}/kcre_ctx.c
-    ${WORKSPACE_ROOT_DIR}/lib/third_party/hos-v4a_modify/kernel/source/arch/proc/win/win32/kcre_ctx.c
+    ${WORKSPACE_ROOT_DIR}/lib/third_party/hos-v4a_modify/extension/kernel/source/arch/proc/win/win32/kcre_ctx.c
     ${KERNEL_SRC_PROC_DIR}/kdis_int.c
     ${KERNEL_SRC_PROC_DIR}/kena_int.c
     # ${KERNEL_SRC_PROC_DIR}/kini_prc.c
@@ -305,6 +305,8 @@ add_library(hosv4a_ex STATIC
     ${KERNEL_SRC_PROC_DIR}/val_int.c
     ${KERNEL_SRC_PROC_DIR}/vsig_int.c
     ${KERNEL_EXT_SRC_DIR}/arch/proc/win/win32/kter_ctx.c
+
+    ${WORKSPACE_ROOT_DIR}/lib/set_thread_name/set_thread_name.cpp
 )
 
 target_include_directories(hosv4a_ex PRIVATE
@@ -313,6 +315,8 @@ target_include_directories(hosv4a_ex PRIVATE
     ${KERNEL_INC_DIR}
     ${KERNEL_INC_PROC_DIR}
     ${KERNEL_INC_IRC_DIR}
+
+    ${WORKSPACE_ROOT_DIR}/lib/set_thread_name
 )
 
 #################################################################################

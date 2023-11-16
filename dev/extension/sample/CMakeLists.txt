@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 3.16)
 
 # project情報
 project(hosv4a_sample
-    DESCRIPTION "HOS-V4a sample win32 (cli)"
+    DESCRIPTION "HOS-V4a extension sample win32 (cli)"
     LANGUAGES C CXX
 )
 
@@ -29,7 +29,7 @@ endif()
 #################################################################################
 
 if(NOT WORKSPACE_ROOT_DIR)
-    set(WORKSPACE_ROOT_DIR "${CMAKE_SOURCE_DIR}/../..")
+    set(WORKSPACE_ROOT_DIR "${CMAKE_SOURCE_DIR}/../../..")
 endif()
 
 if(NOT ARCH_PROC)
@@ -82,7 +82,7 @@ add_executable(sample
     ${WIN32_SAMPLE_DIR}/main.c
     ${WORKSPACE_ROOT_DIR}/lib/third_party/hos-v4a_modify/sample/sample.c
     ${WIN32_SAMPLE_DIR}/ostimer.c
-    ${WORKSPACE_ROOT_DIR}/lib/third_party/hos-v4a_modify/sample/wintimer.c
+    ${WORKSPACE_ROOT_DIR}/lib/third_party/hos-v4a_modify/sample/wintimer_th_name.c
 )
 
 target_link_libraries(sample hosv4a_ex winmm)
@@ -95,6 +95,8 @@ target_include_directories(sample PRIVATE
     ${KERNEL_IRC_DIR}
     ${CMAKE_BINARY_DIR}
     ${WIN32_SAMPLE_DIR}
+
+    ${WORKSPACE_ROOT_DIR}/lib/set_thread_name
 )
 
 #################################################################################

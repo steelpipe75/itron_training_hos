@@ -13,7 +13,7 @@ jobs:
   build:
     strategy:
       matrix:
-        dev_dir: [vter_knl, googletest, googlemock]
+        dev_dir: ["extension/sample", "googletest", "googlemock"]
 
     runs-on: windows-latest
 

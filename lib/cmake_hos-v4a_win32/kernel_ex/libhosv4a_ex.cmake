@@ -305,6 +305,8 @@ add_library(hosv4a_ex STATIC
     ${KERNEL_SRC_PROC_DIR}/val_int.c
     ${KERNEL_SRC_PROC_DIR}/vsig_int.c
     ${KERNEL_EXT_SRC_DIR}/arch/proc/win/win32/kter_ctx.c
+
+    ${WORKSPACE_ROOT_DIR}/lib/set_thread_name/set_thread_name.cpp
 )
 
 target_include_directories(hosv4a_ex PRIVATE
@@ -313,6 +315,8 @@ target_include_directories(hosv4a_ex PRIVATE
     ${KERNEL_INC_DIR}
     ${KERNEL_INC_PROC_DIR}
     ${KERNEL_INC_IRC_DIR}
+
+    ${WORKSPACE_ROOT_DIR}/lib/set_thread_name
 )
 
 #################################################################################

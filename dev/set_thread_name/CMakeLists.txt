@@ -79,9 +79,6 @@ add_executable(sample
 
     ${CMAKE_BINARY_DIR}/kernel_cfg.c
 
-
-    ${WORKSPACE_ROOT_DIR}/lib/set_thread_name/set_thread_name.cpp
-
     ${WIN32_SAMPLE_DIR}/main.c
     ${WORKSPACE_ROOT_DIR}/lib/third_party/hos-v4a_modify/sample/sample.c
     ${WIN32_SAMPLE_DIR}/ostimer.c

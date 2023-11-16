@@ -19,6 +19,9 @@
 #include "core/core.h"
 #include "object/inhobj.h"
 
+#if 1
+#include "set_thread_name.h"
+#endif
 
 static unsigned __stdcall	_kernel_ctx_ent(void *param);		/**< %jp{コンテキストのスレッドエントリー関数} */
 static unsigned __stdcall	_kernel_ctx_int(void *param);		/**< %jp{コンテキストの割込み処理スレッド} */

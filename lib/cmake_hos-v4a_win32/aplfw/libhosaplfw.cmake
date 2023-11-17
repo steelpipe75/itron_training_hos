@@ -1304,7 +1304,7 @@ add_library(hosaplfw STATIC
     ${HOSAPLFW_SRCS}
 )
 
-target_link_libraries(hosaplfw hosv4a)
+target_link_libraries(hosaplfw PUBLIC hosv4a)
 
 target_include_directories(hosaplfw PUBLIC
     ${KERNEL_INC_DIR}

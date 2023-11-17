@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 3.16)
 
 #################################################################################
 
-include(${WORKSPACE_ROOT_DIR}/lib/cmake_hos-v4a_win32/kernel/libhosv4a.cmake)
+add_subdirectory(${WORKSPACE_ROOT_DIR}/lib/cmake_hos-v4a_win32/kernel kernel)
 
 #################################################################################
 
@@ -1304,7 +1304,9 @@ add_library(hosaplfw STATIC
     ${HOSAPLFW_SRCS}
 )
 
-target_include_directories(hosaplfw PRIVATE
+target_link_libraries(hosaplfw hosv4a)
+
+target_include_directories(hosaplfw PUBLIC
     ${KERNEL_INC_DIR}
     ${KERNEL_INC_PROC_DIR}
     ${KERNEL_INC_IRC_DIR}

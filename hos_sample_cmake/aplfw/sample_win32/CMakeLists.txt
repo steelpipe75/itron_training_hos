@@ -47,7 +47,7 @@ add_subdirectory(${WORKSPACE_ROOT_DIR}/lib/cmake_hos-v4a_win32/cfgrtr cfgrtr)
 #################################################################################
 
 set(LINK_WINSOCK YES)
-include(${WORKSPACE_ROOT_DIR}/lib/cmake_hos-v4a_win32/aplfw/libhosaplfw.cmake)
+add_subdirectory(${WORKSPACE_ROOT_DIR}/lib/cmake_hos-v4a_win32/aplfw aplfw)
 
 #################################################################################
 
@@ -89,7 +89,7 @@ add_executable(sample
     ${WORKSPACE_ROOT_DIR}/lib/third_party/hos-v4a_modify/aplfw/sample/win/win32/wintimer.c
 )
 
-target_link_libraries(sample hosv4a hosaplfw ws2_32 winmm)
+target_link_libraries(sample hosaplfw ws2_32 winmm)
 
 target_include_directories(sample PRIVATE
     ${H4ACFG_INC_DIR}

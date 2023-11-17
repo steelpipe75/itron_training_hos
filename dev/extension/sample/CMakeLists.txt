@@ -46,7 +46,7 @@ add_subdirectory(${WORKSPACE_ROOT_DIR}/lib/cmake_hos-v4a_win32/cfgrtr cfgrtr)
 
 #################################################################################
 
-include(${WORKSPACE_ROOT_DIR}/lib/cmake_hos-v4a_win32/kernel_ex/libhosv4a_ex.cmake)
+add_subdirectory(${WORKSPACE_ROOT_DIR}/lib/cmake_hos-v4a_win32/kernel_ex kernel_ex)
 
 #################################################################################
 

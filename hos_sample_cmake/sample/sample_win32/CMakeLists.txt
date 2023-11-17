@@ -43,10 +43,7 @@ endif()
 #################################################################################
 
 add_subdirectory(${WORKSPACE_ROOT_DIR}/lib/cmake_hos-v4a_win32/cfgrtr cfgrtr)
-
-#################################################################################
-
-include(${WORKSPACE_ROOT_DIR}/lib/cmake_hos-v4a_win32/kernel/libhosv4a.cmake)
+add_subdirectory(${WORKSPACE_ROOT_DIR}/lib/cmake_hos-v4a_win32/kernel kernel)
 
 #################################################################################
 
@@ -92,9 +89,6 @@ target_link_libraries(sample hosv4a winmm)
 
 target_include_directories(sample PRIVATE
     ${H4ACFG_INC_DIR}
-    ${KERNEL_INC_DIR}
-    ${KERNEL_PROC_DIR}
-    ${KERNEL_IRC_DIR}
     ${CMAKE_BINARY_DIR}
     ${WIN32_SAMPLE_DIR}
 )

@@ -312,7 +312,7 @@ add_library(hosv4a STATIC
     ${KERNEL_SRC_PROC_DIR}/vsig_int.c
 )
 
-target_include_directories(hosv4a PRIVATE
+target_include_directories(hosv4a PUBLIC
     ${WORKSPACE_ROOT_DIR}/lib/third_party/hos-v4a_modify/kernel/include/arch/proc/win/win32
     ${KERNEL_INC_DIR}
     ${KERNEL_INC_PROC_DIR}

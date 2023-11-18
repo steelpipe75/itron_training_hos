@@ -98,8 +98,6 @@ target_include_directories(sample PRIVATE
     ${KERNEL_IRC_DIR}
     ${CMAKE_BINARY_DIR}
     ${WIN32_SAMPLE_DIR}
-
-    ${WORKSPACE_ROOT_DIR}/lib/set_thread_name
 )
 
 #################################################################################

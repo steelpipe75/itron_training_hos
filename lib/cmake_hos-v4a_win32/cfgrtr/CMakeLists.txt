@@ -92,11 +92,11 @@ target_include_directories(h4acfg-win32 PRIVATE
 
 #################################################################################
 
-include(${WORKSPACE_ROOT_DIR}/lib/cmake_hos-v4a_win32/compile_option/compile_opion_helper.cmake)
+include(${WORKSPACE_ROOT_DIR}/lib/cmake_utility/compile_option/compile_opion_helper.cmake)
 target_compile_options_helper(h4acfg-win32) 
 
 #################################################################################
 
-include(${WORKSPACE_ROOT_DIR}/lib/cmake_hos-v4a_win32/configure_file/vs_vscode.cmake)
+include(${WORKSPACE_ROOT_DIR}/lib/cmake_utility/configure_file/vs_vscode.cmake)
 vs_and_vscode_helper(h4acfg-win32)
 

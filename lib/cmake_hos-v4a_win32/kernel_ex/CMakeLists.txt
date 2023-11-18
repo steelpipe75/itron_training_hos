@@ -361,6 +361,6 @@ target_include_directories(hosv4a_ex PUBLIC
 
 #################################################################################
 
-include(${WORKSPACE_ROOT_DIR}/lib/cmake_hos-v4a_win32/compile_option/compile_opion_helper.cmake)
+include(${WORKSPACE_ROOT_DIR}/lib/cmake_utility/compile_option/compile_opion_helper.cmake)
 target_compile_options_helper(hosv4a_ex) 
 

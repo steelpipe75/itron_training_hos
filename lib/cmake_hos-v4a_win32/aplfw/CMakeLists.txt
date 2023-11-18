@@ -1354,6 +1354,6 @@ target_include_directories(hosaplfw PUBLIC
 
 #################################################################################
 
-include(${WORKSPACE_ROOT_DIR}/lib/cmake_hos-v4a_win32/compile_option/compile_opion_helper.cmake)
+include(${WORKSPACE_ROOT_DIR}/lib/cmake_utility/compile_option/compile_opion_helper.cmake)
 target_compile_options_helper(hosaplfw) 
 

@@ -17,12 +17,12 @@
 #if 1
 #include <process.h>
 #endif
-#if 1
-#include "set_thread_name.h"
-#endif
 
 
 #include "winsockdrv_local.h"
+#if 1
+#include "set_thread_name.h"
+#endif
 
 
 /** 仮想関数テーブル */

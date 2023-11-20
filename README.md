@@ -16,11 +16,6 @@ ALL_BUILDではなく、add_executable()で指定した実行ファイルをス�
 hosのWindows向け実装サンプル(hos-v4a/sample/win/win32)をCMakeを使ってビルドするように設定  
 [![sample sample_win32 build](https://github.com/steelpipe75/itron_training_hos/actions/workflows/CI-sample-sample_win32.yml/badge.svg)](https://github.com/steelpipe75/itron_training_hos/actions/workflows/CI-sample-sample_win32.yml)
 
-### [./hos_sample_cmake/sample/sample_win32_cli](./hos_sample_cmake/sample/sample_win32_cli/README.md)
-
-sample_win32 を MessageBox を使わないように作り変え  
-[![sample sample_win32_cli build](https://github.com/steelpipe75/itron_training_hos/actions/workflows/CI-sample-sample_win32_cli.yml/badge.svg)](https://github.com/steelpipe75/itron_training_hos/actions/workflows/CI-sample-sample_win32_cli.yml)
-
 ### [./hos_sample_cmake/aplfw/sample_win32](./hos_sample_cmake/aplfw/sample_win32/README.md)
 
 hos aplfwのWindows向け実装サンプル(hos-v4a/aplfw/sample/win/win32)をCMakeを使ってビルドするように設定  

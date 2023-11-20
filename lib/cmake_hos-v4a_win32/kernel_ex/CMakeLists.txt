@@ -28,6 +28,10 @@ endif()
 
 #################################################################################
 
+option(HOSV4A_KERNEL_EX_NOUSE_MESSAGEBOX "no use messagebox" OFF)
+
+#################################################################################
+
 if(NOT WORKSPACE_ROOT_DIR)
     set(WORKSPACE_ROOT_DIR "${CMAKE_SOURCE_DIR}/../../..")
 endif()
@@ -350,6 +354,12 @@ add_library(hosv4a_ex STATIC
     ${KERNEL_SRC_PROC_DIR}/vsig_int.c
     ${KERNEL_EXT_SRC_DIR}/arch/proc/win/win32/kter_ctx.c
 )
+
+if(HOSV4A_KERNEL_EX_NOUSE_MESSAGEBOX)
+    target_compile_definitions(hosv4a_ex PRIVATE
+        HOSV4A_KERNEL_EX_NOUSE_MESSAGEBOX
+    )
+endif()
 
 target_include_directories(hosv4a_ex PUBLIC
     ${KERNEL_EXT_INC_DIR}/arch/proc/win/win32

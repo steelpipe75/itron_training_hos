@@ -19,6 +19,20 @@
 #if 1
 #include <stdio.h>
 #endif
+#ifndef HOSV4A_KERNEL_EX_NOUSE_MESSAGEBOX
+#include <process.h>
+static unsigned dwThreadId;
+static HANDLE hThread = NULL;
+static HANDLE hTable[2] = {NULL, NULL};
+static unsigned __stdcall MessageBox_Thread(void* pArg);
+static unsigned __stdcall MessageBox_Thread(void* pArg)
+{
+	(void)pArg;
+	/* %jp{ダイアログを表示} */
+	MessageBox(NULL, _T("Press OK, Exit a process"), _T("Hyper Operationg System V4 Advance for Win32"), MB_OK);
+	return 0;
+}
+#endif
 
 /** %jp{コンテキストの開始} */
 void _kernel_sta_ctx(_KERNEL_T_CTXCB *ctxcb)
@@ -32,6 +46,23 @@ void _kernel_sta_ctx(_KERNEL_T_CTXCB *ctxcb)
 	if ( GetCurrentThreadId() == _kernel_ictxcb.dwPrimaryThreadId )
 	{
 #if 1
+	#ifndef HOSV4A_KERNEL_EX_NOUSE_MESSAGEBOX
+		hThread = (HANDLE)_beginthreadex(
+			NULL,				/* void *security, */
+			0,					/* unsigned stack_size, */
+			MessageBox_Thread,	/* unsigned ( __stdcall *start_address )( void * ), */
+			NULL,				/* void *arglist, */
+			0,					/* unsigned initflag, */
+			&dwThreadId			/* unsigned *thrdaddr */
+		);
+		if(hThread == NULL){
+			printf("Error : _beginthreadex() returned NULL\n");
+			ExitProcess(1);
+		}
+		hTable[0] = hThread;
+		hTable[1] = _kernel_ictxcb.hTerCtxEvent;
+		WaitForMultipleObjects(sizeof(hTable)/sizeof(hTable[0]), hTable, FALSE, INFINITE);
+	#else
 		printf("#### Hit Space Key to Exit ####\n");
 		while(1) {
 			if(GetAsyncKeyState(VK_SPACE) & 0x01 ) {
@@ -43,17 +74,18 @@ void _kernel_sta_ctx(_KERNEL_T_CTXCB *ctxcb)
 			}else if(result == WAIT_TIMEOUT) {
 				/* タイムアウト */
 			}else {
-				printf("Error : WaitForSingleObject() returned WAIT_FAILED");
+				printf("Error : WaitForSingleObject() returned WAIT_FAILED\n");
 				ExitProcess(1);
 			}
 		}
+	#endif
 #else
 		/* %jp{ダイアログを表示} */
 		MessageBox(NULL, _T("Press OK, Exit a process"), _T("Hyper Operationg System V4 Advance for Win32"), MB_OK);
+#endif
 		
 		/* %jp{終了} */
 		ExitProcess(0);
-#endif
 	}
 }
 

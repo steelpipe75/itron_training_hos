@@ -13,7 +13,7 @@ jobs:
   build:
     strategy:
       matrix:
-        dev_dir: ["extension/sample", "extension/aplfw", "googletest", "googlemock"]
+        dev_dir: ["extension/sample", "extension/sample_cli", "extension/aplfw", "googletest", "googlemock"]
 
     runs-on: windows-latest
 

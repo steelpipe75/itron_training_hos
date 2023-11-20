@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 3.16)
 
 # project情報
 project(hosv4a_sample
-    DESCRIPTION "HOS-V4a extension sample win32 (cli)"
+    DESCRIPTION "HOS-V4a extension sample win32"
     LANGUAGES C CXX
 )
 

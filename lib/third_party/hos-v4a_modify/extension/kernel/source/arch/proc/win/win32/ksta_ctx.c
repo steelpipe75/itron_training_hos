@@ -34,6 +34,7 @@ static unsigned __stdcall MessageBox_Thread(void* pArg)
 }
 #endif
 
+
 /** %jp{コンテキストの開始} */
 void _kernel_sta_ctx(_KERNEL_T_CTXCB *ctxcb)
 {

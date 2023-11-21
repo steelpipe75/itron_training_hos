@@ -18,9 +18,9 @@
 #include "core/core.h"
 #if 1
 #include <stdio.h>
-#endif
-#ifndef HOSV4A_KERNEL_EX_NOUSE_MESSAGEBOX
+	#ifndef HOSV4A_KERNEL_EX_NOUSE_MESSAGEBOX
 #include <process.h>
+#include "set_thread_name.h"
 static unsigned dwThreadId;
 static HANDLE hThread = NULL;
 static HANDLE hTable[2] = {NULL, NULL};
@@ -32,6 +32,7 @@ static unsigned __stdcall MessageBox_Thread(void* pArg)
 	MessageBox(NULL, _T("Press OK, Exit a process"), _T("Hyper Operationg System V4 Advance for Win32"), MB_OK);
 	return 0;
 }
+	#endif
 #endif
 
 
@@ -60,6 +61,7 @@ void _kernel_sta_ctx(_KERNEL_T_CTXCB *ctxcb)
 			printf("Error : _beginthreadex() returned NULL\n");
 			ExitProcess(1);
 		}
+		SetThreadName(dwThreadId, "MessageBox_Thread");
 		hTable[0] = hThread;
 		hTable[1] = _kernel_ictxcb.hTerCtxEvent;
 		WaitForMultipleObjects(sizeof(hTable)/sizeof(hTable[0]), hTable, FALSE, INFINITE);

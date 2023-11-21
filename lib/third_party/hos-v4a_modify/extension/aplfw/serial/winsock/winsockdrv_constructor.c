@@ -98,9 +98,9 @@ FILE_ERR WinSockDrv_Constructor(C_WINSOCKDRV *self, const T_DRVOBJ_METHODS *pMet
 	/* %jp{スレッド生成} */
 #if 1
 	self->hRecvThread = (HANDLE)_beginthreadex(NULL, 0, WinSockDrv_Recv, (void *)self, 0, &dwThreadId);
-	SetThreadName(dwThreadId, "winsockdrv_constructor.c:WinSockDrv_Recv");
+	SetThreadName(dwThreadId, "WinSockDrv_Recv");
 	self->hSendThread = (HANDLE)_beginthreadex(NULL, 0, WinSockDrv_Send, (void *)self, 0, &dwThreadId);
-	SetThreadName(dwThreadId, "winsockdrv_constructor.c:WinSockDrv_Send");
+	SetThreadName(dwThreadId, "WinSockDrv_Send");
 #else
 	self->hRecvThread = CreateThread(NULL, 0, WinSockDrv_Recv, (LPVOID)self, 0, &dwThreadId);
 	self->hSendThread = CreateThread(NULL, 0, WinSockDrv_Send, (LPVOID)self, 0, &dwThreadId);

@@ -63,7 +63,7 @@ void WinTimer_Start(INHNO inhno, int iInterval)
 		0,					/* unsigned initflag, */
 		&dwThreadId			/* unsigned *thrdaddr */
 	);
-	SetThreadName(dwThreadId, "WinTimer");
+	SetThreadName(dwThreadId, "WinTimer_Thread");
 #else
 	CreateThread(NULL, 0, WinTimer_Thread, (LPVOID)inhno, 0, &dwThreadId);
 #endif

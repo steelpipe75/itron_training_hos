@@ -70,17 +70,19 @@ void _kernel_cre_ctx_ex(
 	snprintf(
 			thNameWorkBuff,
 			sizeof(thNameWorkBuff)/sizeof(thNameWorkBuff[0]),
-			"%s:Thread",
+			"%s:_kernel_ctx_ent",
 			threadName
 		);
+	thNameWorkBuff[sizeof(thNameWorkBuff)/sizeof(thNameWorkBuff[0]) - 1] = '\0';
 	SetThreadName(ctxcb->dwThreadId, thNameWorkBuff);
 	ctxcb->hIntThread = (HANDLE)_beginthreadex(NULL, 0, _kernel_ctx_int, (void *)ctxcb, 0, &ctxcb->dwIntThreadId);
 	snprintf(
 			thNameWorkBuff,
 			sizeof(thNameWorkBuff)/sizeof(thNameWorkBuff[0]),
-			"%s:IntThread",
+			"%s:_kernel_ctx_int",
 			threadName
 		);
+	thNameWorkBuff[sizeof(thNameWorkBuff)/sizeof(thNameWorkBuff[0]) - 1] = '\0';
 	SetThreadName(ctxcb->dwIntThreadId, thNameWorkBuff);
 #else
 #if defined(_MSC_VER)	/* Visual-C++ の場合 */

@@ -1,6 +1,6 @@
 #if 1
 /**
- * hos-v4a の kernel/source/arch/proc/win/win32/ksta_ctx.c
+ * hos-v4a の kernel\source\arch\proc\win\win32\ksta_ctx.c
  * をもとに改変
  */
 #endif

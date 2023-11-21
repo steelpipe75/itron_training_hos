@@ -1,6 +1,6 @@
 #if 1
 /**
- * hos-v4a の aplfw/driver/serial/winsock/winsockdrv_send.c
+ * hos-v4a の aplfw\driver\serial\winsock\winsockdrv_send.c
  * をもとに改変
  */
 #endif

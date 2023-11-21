@@ -1,3 +1,9 @@
+#if 1
+/**
+ * hos-v4a の kernel\source\object\tsk\iact_tsk.c
+ * をもとに改変
+ */
+#endif
 /** 
  *  Hyper Operating System V4 Advance
  *

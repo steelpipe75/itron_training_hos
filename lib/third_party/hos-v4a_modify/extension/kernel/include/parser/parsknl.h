@@ -897,6 +897,10 @@
 #define _KERNEL_TCB_TEXATR			FALSE								/**< %jp{タスク例外処理ルーチン属性} */
 #define _KERNEL_TCB_TEXRTN			_KERNEL_SPT_TEX						/**< %jp{タスク例外処理ルーチンの起動番地} */
 
+#if 1
+/* Task DS Name */
+#define _KERNEL_TCB_DSNAME			_KERNEL_SPT_DSNAME					/**< %jp{デバッガに表示するタスク名} */
+#endif
 
 
 /* ------------------------------------------------------------------ */

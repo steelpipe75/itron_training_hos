@@ -100,7 +100,7 @@ ER sta_tsk(
 			(FP)_kernel_ent_tsk,						/* %jp{コンテキストの開始アドレス} */
 			stacd,										/* %jp{タスクの拡張情報} */
 			(VP_INT)_KERNEL_TSK_GET_TASK(tcb_ro),		/* %jp{タスクの起動番地} */
-			"hos:_kernel_ent_tsk"
+			_KERNEL_TSK_GET_DSNAME(tcb_ro)
 		);
 #else
 	_KERNEL_CRE_CTX(

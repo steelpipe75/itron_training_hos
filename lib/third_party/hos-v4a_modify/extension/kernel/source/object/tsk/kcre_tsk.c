@@ -163,7 +163,7 @@ ER _kernel_cre_tsk(ID tskid, const T_CTSK *pk_ctsk)
 				(FP)_kernel_ent_tsk,				/* %jp{コンテキストの開始アドレス} */
 				(VP_INT)pk_ctsk->exinf,				/* %jp{タスクの拡張情報} */
 				(VP_INT)pk_ctsk->task,				/* %jp{タスクの起動番地} */
-				"hos:_kernel_ent_tsk"
+				_KERNEL_TSK_GET_DSNAME(tcb_ro)
 			);
 #else
 		_KERNEL_CRE_CTX(

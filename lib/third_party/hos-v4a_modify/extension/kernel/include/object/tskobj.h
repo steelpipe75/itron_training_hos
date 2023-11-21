@@ -1153,6 +1153,16 @@ extern  _KERNEL_T_TCB					*_kernel_tcb_tbl[];										/**< %jp{タスクコン�
 #define _KERNEL_TSK_GET_TEXRTN(tcb_ro)			(0)
 #endif
 
+#if 1
+/* dsname */
+#if _KERNEL_TCB_DSNAME
+#define _KERNEL_TSK_SET_DSNAME(tcb_ro, x)		do { (tcb_ro)->dsname = (_KERNEL_TCB_T_DSNAME)(x); } while (0)
+#define _KERNEL_TSK_GET_DSNAME(tcb_ro)			((_KERNEL_TSK_T_DSNAME)(tcb_ro)->texrtn)
+#else
+#define _KERNEL_TSK_SET_DSNAME(tcb_ro, x)		do { } while (0)
+#define _KERNEL_TSK_GET_DSNAME(tcb_ro)			"hos:_kernel_ent_tsk"
+#endif
+#endif
 
 
 /* ------------------------------------------ */

@@ -134,11 +134,7 @@ ER _kernel_cre_tsk(ID tskid, const T_CTSK *pk_ctsk)
 	_KERNEL_TSK_SET_TEXATR(tcb_ro, TA_HLNG);
 	_KERNEL_TSK_SET_TEXRTN(tcb_ro, NULL);
 #if 1
-	if(pk_ctsk->dsname == NULL){
-		_KERNEL_TSK_SET_DSNAME(tcb_ro, "hos:_kernel_ent_tsk");
-	}else{
-		_KERNEL_TSK_SET_DSNAME(tcb_ro, pk_ctsk->dsname);
-	}
+	_KERNEL_TSK_SET_DSNAME(tcb_ro, pk_ctsk->dsname);
 #endif
 	
 	_KERNEL_TSK_CRE_TOQOBJ(tcb);

@@ -50,6 +50,9 @@ void _kernel_cre_ctx_ex(
 #if 1
 	char thNameWorkBuff[256];
 
+	if(threadName == NULL){
+		threadName = "hos:_kernel_ent_tsk";
+	}
 #endif
 	ctxcb->blInterrupt = FALSE;
 

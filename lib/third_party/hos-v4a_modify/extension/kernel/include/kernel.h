@@ -73,6 +73,9 @@ typedef struct t_ctsk
 	PRI     itskpri;		/**< %jp{タスクの起動時優先度} */
 	SIZE    stksz;			/**< %jp{スタック領域のサイズ(バイト数)} */
 	VP      stk;			/**< %jp{スタック領域の先頭番地} */
+#if 1
+	const char* dsname;
+#endif
 } T_CTSK;
 
 /** %jp{タスク状態} */

@@ -369,6 +369,9 @@
 #define _KERNEL_SPT_TEX				FALSE
 #endif
 
+#if 1
+#define _KERNEL_SPT_DSNAME			TRUE
+#endif
 
 #define _KERNEL_SPT_SEM				TRUE
 #define _KERNEL_SPT_FLG				TRUE

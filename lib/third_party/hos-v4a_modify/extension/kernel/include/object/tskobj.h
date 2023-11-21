@@ -548,6 +548,11 @@ typedef _KERNEL_T_LEAST_UD				_KERNEL_TCB_T_TEXPTN;			/**< %jp{例外要因パ�
 
 #endif
 
+#if 1
+typedef const char*						_KERNEL_TCB_T_DSNAME;
+typedef const char*						_KERNEL_TSK_T_DSNAME;
+#define _KERNEL_TCB_TBITDEF_DSNAME
+#endif
 
 
 
@@ -810,6 +815,12 @@ typedef struct _kernel_t_tcb
 
 #if _KERNEL_TCB_TEXRTN
 	_KERNEL_TCB_T_TEXRTN	texrtn		_KERNEL_TCB_TBITDEF_TEXRTN;		/**< %jp{タスク例外処理ルーチンの起動番地} */
+#endif
+#if 1
+
+#if _KERNEL_TCB_DSNAME
+	_KERNEL_TCB_T_DSNAME	dsname		_KERNEL_TCB_TBITDEF_DSNAME;
+#endif
 #endif
 } _KERNEL_T_TCB;
 
@@ -1157,7 +1168,7 @@ extern  _KERNEL_T_TCB					*_kernel_tcb_tbl[];										/**< %jp{タスクコン�
 /* dsname */
 #if _KERNEL_TCB_DSNAME
 #define _KERNEL_TSK_SET_DSNAME(tcb_ro, x)		do { (tcb_ro)->dsname = (_KERNEL_TCB_T_DSNAME)(x); } while (0)
-#define _KERNEL_TSK_GET_DSNAME(tcb_ro)			((_KERNEL_TSK_T_DSNAME)(tcb_ro)->texrtn)
+#define _KERNEL_TSK_GET_DSNAME(tcb_ro)			((_KERNEL_TSK_T_DSNAME)(tcb_ro)->dsname)
 #else
 #define _KERNEL_TSK_SET_DSNAME(tcb_ro, x)		do { } while (0)
 #define _KERNEL_TSK_GET_DSNAME(tcb_ro)			"hos:_kernel_ent_tsk"

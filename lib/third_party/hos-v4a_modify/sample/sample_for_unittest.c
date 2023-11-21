@@ -67,8 +67,8 @@ void Sample_Initialize(VP_INT exinf)
 	T_CMPF cmpf;
 	T_CMBX cmbx;
 #if 1
-	T_CFLG cflg;
-	T_CTSK ctsk;
+	T_CFLG cflg = {0};
+	T_CTSK ctsk = {0};
 #endif
 	
 	/* %jp{固定長メモリプール生成} */
@@ -97,6 +97,7 @@ void Sample_Initialize(VP_INT exinf)
 	ctsk.itskpri = 1;
 	ctsk.stksz   = sizeof(stk_gtest);
 	ctsk.stk     = stk_gtest;
+	ctsk.dsname  = "drive_gtest";
 	tskid_gtest = acre_tsk(&ctsk);
 #endif
 

@@ -154,6 +154,18 @@ ER _kernel_cre_tsk(ID tskid, const T_CTSK *pk_ctsk)
 		_KERNEL_TSK_SET_SUSCNT(tcb, 0);
 		
 		/* %jp{コンテキスト生成} */
+#if 1
+		_KERNEL_CRE_CTX_EX(
+				_KERNEL_TSK_GET_CTXCB(tcb),			/* %jp{コンテキスト制御ブロック} */
+				pk_ctsk->tsksz,						/* %jp{タスクのスタック領域サイズ} */
+				stk,								/* %jp{タスクのスタック領域の先頭番地} */
+				(VP)((VB *)stk + pk_ctsk->stksz),	/* %jp{スタックポインタの初期値} */
+				(FP)_kernel_ent_tsk,				/* %jp{コンテキストの開始アドレス} */
+				(VP_INT)pk_ctsk->exinf,				/* %jp{タスクの拡張情報} */
+				(VP_INT)pk_ctsk->task,				/* %jp{タスクの起動番地} */
+				"hos:_kernel_ent_tsk"
+			);
+#else
 		_KERNEL_CRE_CTX(
 				_KERNEL_TSK_GET_CTXCB(tcb),			/* %jp{コンテキスト制御ブロック} */
 				pk_ctsk->tsksz,						/* %jp{タスクのスタック領域サイズ} */
@@ -163,6 +175,7 @@ ER _kernel_cre_tsk(ID tskid, const T_CTSK *pk_ctsk)
 				(VP_INT)pk_ctsk->exinf,				/* %jp{タスクの拡張情報} */
 				(VP_INT)pk_ctsk->task				/* %jp{タスクの起動番地} */
 			);
+#endif
 		
 		/* %jp{タスク実行可能状態に設定} */
 		_KERNEL_DSP_STA_TSK(_KERNEL_TSK_GET_TSKHDL(tskid, tcb));

@@ -59,6 +59,18 @@ ER vsta_knl(void)
 #endif
 	
 	/* %jp{システムコンテキストの生成} */
+#if 1
+	_KERNEL_CRE_CTX_EX(
+			_KERNEL_SYS_GET_SYSCTXCB(),
+			_KERNEL_SYS_GET_SYSSTKSZ(),
+			_KERNEL_SYS_GET_SYSSTK(),
+			_KERNEL_SYS_GET_SYSISP(),
+			(FP)_kernel_sys_sta,
+			(VP_INT)0,
+			(VP_INT)0,
+			"hos:_kernel_sys_sta"
+		);
+#else
 	_KERNEL_CRE_CTX(
 			_KERNEL_SYS_GET_SYSCTXCB(),
 			_KERNEL_SYS_GET_SYSSTKSZ(),
@@ -68,6 +80,7 @@ ER vsta_knl(void)
 			(VP_INT)0,
 			(VP_INT)0
 		);
+#endif
 	
 	
 	_KERNEL_LEAVE_SVC();

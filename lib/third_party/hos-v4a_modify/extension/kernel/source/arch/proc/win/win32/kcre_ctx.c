@@ -20,6 +20,7 @@
 #include "object/inhobj.h"
 
 #if 1
+#include <stdio.h>
 #include "set_thread_name.h"
 #endif
 
@@ -33,7 +34,23 @@ void _kernel_cre_ctx(
 		FP              entry,			/* コンテキストの実行開始番地 */
 		VP_INT          exinf1,			/* コンテキストの実行時パラメータ1 */
 		VP_INT          exinf2)			/* コンテキストの実行時パラメータ2 */
+#if 1
 {
+	_kernel_cre_ctx_ex(ctxcb, entry, exinf1, exinf2, "_kernel_cre_ctx:");
+}
+
+void _kernel_cre_ctx_ex(
+		_KERNEL_T_CTXCB	*ctxcb,		/* コンテキストを作成するアドレス */
+		FP              entry,			/* コンテキストの実行開始番地 */
+		VP_INT          exinf1,			/* コンテキストの実行時パラメータ1 */
+		VP_INT          exinf2,			/* コンテキストの実行時パラメータ2 */
+		const char*     threadName)		/* コンテキストスレッドにつける名前 */
+#endif
+{
+#if 1
+	char thNameWorkBuff[256];
+
+#endif
 	ctxcb->blInterrupt = FALSE;
 
 	/* %jp{起動情報を格納} */
@@ -47,9 +64,21 @@ void _kernel_cre_ctx(
 
 #if 1
 	ctxcb->hThread    = (HANDLE)_beginthreadex(NULL, 0, _kernel_ctx_ent, (void *)ctxcb, 0, &ctxcb->dwThreadId);
-	SetThreadName(ctxcb->dwThreadId, "_kernel_cre_ctx:ctxcb->dwThreadId");
+	snprintf(
+			thNameWorkBuff,
+			sizeof(thNameWorkBuff)/sizeof(thNameWorkBuff[0]),
+			"%s:Thread",
+			threadName
+		);
+	SetThreadName(ctxcb->dwThreadId, thNameWorkBuff);
 	ctxcb->hIntThread = (HANDLE)_beginthreadex(NULL, 0, _kernel_ctx_int, (void *)ctxcb, 0, &ctxcb->dwIntThreadId);
-	SetThreadName(ctxcb->dwIntThreadId, "_kernel_cre_ctx:ctxcb->dwIntThreadId");
+	snprintf(
+			thNameWorkBuff,
+			sizeof(thNameWorkBuff)/sizeof(thNameWorkBuff[0]),
+			"%s:IntThread",
+			threadName
+		);
+	SetThreadName(ctxcb->dwIntThreadId, thNameWorkBuff);
 #else
 #if defined(_MSC_VER)	/* Visual-C++ の場合 */
 	ctxcb->hThread    = (HANDLE)_beginthreadex(NULL, 0, _kernel_ctx_ent, (void *)ctxcb, 0, &ctxcb->dwThreadId);

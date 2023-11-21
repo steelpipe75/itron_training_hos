@@ -90,6 +90,10 @@ void    _kernel_dis_int(void);																/**< %jp{割込み禁止} */
 void    _kernel_wai_int(void);																/**< %jp{割込み待ち(アイドル時の処理)} */
 
 void    _kernel_cre_ctx(_KERNEL_T_CTXCB *ctxcb, FP entry, VP_INT exinf1, VP_INT exinf2);	/**< %jp{実行コンテキストの作成} */
+#if 1
+void    _kernel_cre_ctx_ex(_KERNEL_T_CTXCB *ctxcb, FP entry, VP_INT exinf1, VP_INT exinf2, const char* threadName);
+																							/**< %jp{実行コンテキストの作成(スレッド名登録付き)} */
+#endif
 void    _kernel_del_ctx(_KERNEL_T_CTXCB *ctxcb);											/**< %jp{実行コンテキストの削除} */
 void    _kernel_rst_ctx(_KERNEL_T_CTXCB *ctxcb);											/**< %jp{実行コンテキストのリスタート} */
 void    _kernel_sta_ctx(_KERNEL_T_CTXCB *ctxcb);											/**< %jp{実行コンテキストの開始} */
@@ -115,6 +119,10 @@ void     vsig_int(int inhno);																/**< %jp{擬似割込みサポー�
 
 #define _KERNEL_CRE_CTX(ctxcb, stksz, stk, isp, entry, par1, par2)		\
 							_kernel_cre_ctx(ctxcb, entry, par1, par2)
+#if 1
+#define _KERNEL_CRE_CTX_EX(ctxcb, stksz, stk, isp, entry, par1, par2, th_name)		\
+							_kernel_cre_ctx_ex(ctxcb, entry, par1, par2, th_name)
+#endif
 #define _KERNEL_DEL_CTX(ctxcb)	_kernel_del_ctx(ctxcb)
 #define _KERNEL_RST_CTX(ctxcb, stksz, stk, isp, entry, par1, par2)		\
 							_kernel_rst_ctx(ctxcb)

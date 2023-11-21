@@ -91,6 +91,18 @@ ER sta_tsk(
 	_KERNEL_TSK_SET_SUSCNT(tcb, 0);
 	
 	/* %jp{コンテキスト生成} */
+#if 1
+	_KERNEL_CRE_CTX_EX(
+			_KERNEL_TSK_GET_CTXCB(tcb),					/* %jp{コンテキスト制御ブロック} */
+			_KERNEL_TSK_GET_STKSZ(tcb_ro),				/* %jp{タスクのスタック領域サイズ} */
+			_KERNEL_TSK_GET_STK(tcb_ro),				/* %jp{タスクのスタック領域の先頭番地} */
+			(VP)_KERNEL_TSK_GET_ISP(tcb_ro),			/* %jp{スタックポインタの初期値} */
+			(FP)_kernel_ent_tsk,						/* %jp{コンテキストの開始アドレス} */
+			stacd,										/* %jp{タスクの拡張情報} */
+			(VP_INT)_KERNEL_TSK_GET_TASK(tcb_ro),		/* %jp{タスクの起動番地} */
+			"hos:_kernel_ent_tsk"
+		);
+#else
 	_KERNEL_CRE_CTX(
 			_KERNEL_TSK_GET_CTXCB(tcb),					/* %jp{コンテキスト制御ブロック} */
 			_KERNEL_TSK_GET_STKSZ(tcb_ro),				/* %jp{タスクのスタック領域サイズ} */
@@ -100,6 +112,7 @@ ER sta_tsk(
 			stacd,										/* %jp{タスクの拡張情報} */
 			(VP_INT)_KERNEL_TSK_GET_TASK(tcb_ro)		/* %jp{タスクの起動番地} */
 		);
+#endif
 	
 	/* %jp{タスク実行可能状態に設定} */
 	_KERNEL_DSP_STA_TSK(tskhdl);

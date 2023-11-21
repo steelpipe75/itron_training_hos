@@ -58,6 +58,18 @@ void exd_tsk(void)
 #endif
 	
 	/* %jp{システムコンテキストの生成} */
+#if 1
+	_KERNEL_CRE_CTX_EX(
+			_KERNEL_SYS_GET_SYSCTXCB(),
+			_KERNEL_SYS_GET_SYSSTKSZ(),
+			_KERNEL_SYS_GET_SYSSTK(),
+			_KERNEL_SYS_GET_SYSISP(),
+			(FP)_kernel_exd_tsk,
+			(VP_INT)tskhdl,
+			(VP_INT)0,
+			"hos:_kernel_exd_tsk"
+		);
+#else
 	_KERNEL_CRE_CTX(
 			_KERNEL_SYS_GET_SYSCTXCB(),
 			_KERNEL_SYS_GET_SYSSTKSZ(),
@@ -67,6 +79,7 @@ void exd_tsk(void)
 			(VP_INT)tskhdl,
 			(VP_INT)0
 		);
+#endif
 	
 	/* %jp{システムコンテキストにスイッチ} */
 	_kernel_sta_ctx(_KERNEL_SYS_GET_SYSCTXCB());

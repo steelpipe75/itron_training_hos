@@ -156,7 +156,8 @@ set(KERNEL_SRCS ${KERNEL_SRCS}
 # System
 set(SYSOBJ_DIR ${KERNEL_OBJ_DIR}/sys)
 set(KERNEL_SRCS ${KERNEL_SRCS}
-    ${SYSOBJ_DIR}/sta_knl.c
+    # ${SYSOBJ_DIR}/sta_knl.c
+    ${KERNEL_EXT_SRC_DIR}/object/sys/sta_knl.c
     ${SYSOBJ_DIR}/get_tid.c
     ${SYSOBJ_DIR}/loc_cpu.c
     ${SYSOBJ_DIR}/unl_cpu.c
@@ -173,13 +174,17 @@ set(TSKOBJ_DIR ${KERNEL_OBJ_DIR}/tsk)
 set(KERNEL_SRCS ${KERNEL_SRCS}
     ${TSKOBJ_DIR}/cre_tsk.c
     ${TSKOBJ_DIR}/acre_tsk.c
-    ${TSKOBJ_DIR}/kcre_tsk.c
+    # ${TSKOBJ_DIR}/kcre_tsk.c
+    ${KERNEL_EXT_SRC_DIR}/object/tsk/kcre_tsk.c
     ${TSKOBJ_DIR}/del_tsk.c
-    ${TSKOBJ_DIR}/act_tsk.c
-    ${TSKOBJ_DIR}/iact_tsk.c
+    # ${TSKOBJ_DIR}/act_tsk.c
+    ${KERNEL_EXT_SRC_DIR}/object/tsk/act_tsk.c
+    # ${TSKOBJ_DIR}/iact_tsk.c
+    ${KERNEL_EXT_SRC_DIR}/object/tsk/iact_tsk.c
     ${TSKOBJ_DIR}/can_act.c
     ${TSKOBJ_DIR}/ext_tsk.c
-    ${TSKOBJ_DIR}/exd_tsk.c
+    # ${TSKOBJ_DIR}/exd_tsk.c
+    ${KERNEL_EXT_SRC_DIR}/object/tsk/exd_tsk.c
     ${TSKOBJ_DIR}/ter_tsk.c
     ${TSKOBJ_DIR}/chg_pri.c
     ${TSKOBJ_DIR}/kchg_pri.c

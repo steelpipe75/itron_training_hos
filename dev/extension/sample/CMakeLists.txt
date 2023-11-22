@@ -43,6 +43,7 @@ endif()
 #################################################################################
 
 add_compile_definitions(_KERNEL_HOK_TSK)
+add_subdirectory(${WORKSPACE_ROOT_DIR}/lib/for_hos-v4a/HockTaskSwitch HockTaskSwitch)
 
 #################################################################################
 
@@ -90,11 +91,9 @@ add_executable(sample
     ${WORKSPACE_ROOT_DIR}/lib/third_party/hos-v4a_modify/sample/sample.c
     ${WIN32_SAMPLE_DIR}/ostimer.c
     ${WORKSPACE_ROOT_DIR}/lib/third_party/hos-v4a_modify/sample/wintimer_th_name.c
-
-    HockTaskSwitch.cpp
 )
 
-target_link_libraries(sample hosv4a_ex winmm)
+target_link_libraries(sample hosv4a_ex winmm HockTaskSwitch)
 
 target_include_directories(sample PRIVATE
     ${H4ACFG_INC_DIR}

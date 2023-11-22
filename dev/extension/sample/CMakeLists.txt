@@ -42,7 +42,7 @@ endif()
 
 #################################################################################
 
-add_subdirectory(${WORKSPACE_ROOT_DIR}/lib/cmake_hos-v4a_win32/cfgrtr cfgrtr)
+add_subdirectory(${WORKSPACE_ROOT_DIR}/lib/cmake_hos-v4a_win32/cfgrtr_ex cfgrtr_ex)
 
 #################################################################################
 
@@ -74,8 +74,8 @@ endif()
 add_custom_command(
     OUTPUT  ${CMAKE_BINARY_DIR}/kernel_cfg.c ${CMAKE_BINARY_DIR}/kernel_id.h
     DEPENDS ${CMAKE_BINARY_DIR}/system.i
-    DEPENDS h4acfg-win32
-    COMMAND h4acfg-win32 ${CMAKE_BINARY_DIR}/system.i -c ${CMAKE_BINARY_DIR}/kernel_cfg.c -i ${CMAKE_BINARY_DIR}/kernel_id.h
+    DEPENDS h4acfg_ex-win32
+    COMMAND h4acfg_ex-win32 ${CMAKE_BINARY_DIR}/system.i -c ${CMAKE_BINARY_DIR}/kernel_cfg.c -i ${CMAKE_BINARY_DIR}/kernel_id.h
 )
 
 add_executable(sample

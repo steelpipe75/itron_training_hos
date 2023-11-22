@@ -42,6 +42,11 @@ endif()
 
 #################################################################################
 
+add_compile_definitions(_KERNEL_HOK_TSK)
+add_subdirectory(${WORKSPACE_ROOT_DIR}/lib/for_hos-v4a/HockTaskSwitch HockTaskSwitch)
+
+#################################################################################
+
 add_subdirectory(${WORKSPACE_ROOT_DIR}/lib/cmake_hos-v4a_win32/cfgrtr_ex cfgrtr_ex)
 
 #################################################################################
@@ -88,7 +93,7 @@ add_executable(sample
     ${WORKSPACE_ROOT_DIR}/lib/third_party/hos-v4a_modify/sample/wintimer_th_name.c
 )
 
-target_link_libraries(sample hosv4a_ex winmm)
+target_link_libraries(sample hosv4a_ex winmm HockTaskSwitch)
 
 target_include_directories(sample PRIVATE
     ${H4ACFG_INC_DIR}

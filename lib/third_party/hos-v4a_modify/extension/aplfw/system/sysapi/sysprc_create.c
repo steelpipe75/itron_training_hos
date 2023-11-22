@@ -1,3 +1,9 @@
+#if 1
+/**
+ * hos-v4a の aplfw\system\sysapi\sysprc_create.c
+ * をもとに改変
+ */
+#endif
 /** 
  *  Hyper Operating System  Application Framework
  *

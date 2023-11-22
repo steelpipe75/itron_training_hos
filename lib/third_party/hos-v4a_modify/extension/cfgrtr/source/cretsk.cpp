@@ -29,6 +29,7 @@
 #define CRETSK_ITSKPRI		4
 #define CRETSK_STKSZ		5
 #define CRETSK_STK			6
+#define CRETSK_DSNAME		7
 
 
 
@@ -40,7 +41,7 @@ CApiCreTsk::CApiCreTsk()
 
 	// %jp{パラメーター構文設定}
 	m_iParamSyntax[0] = 0;		// %jp{単独パラメーター}
-	m_iParamSyntax[1] = 6;		// %jp{6パラメーターのブロック}
+	m_iParamSyntax[1] = 7;		// %jp{6パラメーターのブロック}
 	m_iParams = 2;
 }
 
@@ -438,6 +439,8 @@ void CApiCreTsk::WriteTcbRom(FILE *fp, int iObj)
 #if _KERNEL_TCB_TEXRTN
 	fprintf(fp, "0, ");					/**< texrtn %jp{タスク例外処理ルーチンの起動番地} */
 #endif
+
+	fprintf(fp, "%s, ", m_pParamPacks[iObj]->GetParam(CRETSK_DSNAME));		/* %jp{タスクの起動番地} */
 }
 
 

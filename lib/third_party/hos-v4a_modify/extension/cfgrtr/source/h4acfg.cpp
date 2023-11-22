@@ -334,7 +334,7 @@ void WriteIdFile(FILE* fp)
 	/* ヘッダ出力 */
 	fputs(
 		"/* ------------------------------------------------------------------------ */\n"
-		"/*  HOS-V4a  kernel configuration                                           */\n"
+		"/*  HOS-V4a  kernel ex configuration                                        */\n"
 		"/*    kernel object ID definition                                           */\n"
 		"/*                                                                          */\n"
 		"/* ------------------------------------------------------------------------ */\n"
@@ -371,7 +371,7 @@ void WriteCfgFile(FILE* fp)
 	fprintf(
 		fp,
 		"/* ------------------------------------------------------------------------ */\n"
-		"/*  HOS-V4a  kernel configuration                                           */\n"
+		"/*  HOS-V4a  kernel ex configuration                                        */\n"
 		"/*    kernel object create and initialize                                   */\n"
 		"/*                                                                          */\n"
 		"/* ------------------------------------------------------------------------ */\n"
@@ -458,7 +458,7 @@ void WriteVctFile(FILE* fp)
 	fprintf(
 		fp,
 		"/* ------------------------------------------------------------------------ */\n"
-		"/*  HOS-V4a  kernel configuration                                           */\n"
+		"/*  HOS-V4a  kernel ex configuration                                        */\n"
 		"/*                                                                          */\n"
 		"/* ------------------------------------------------------------------------ */\n"
 		"\n\n");

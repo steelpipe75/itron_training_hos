@@ -33,6 +33,9 @@ extern "C" void SetThreadName(DWORD dwThreadID, const char* threadName) {
     }
 #pragma warning(pop)
 #else /* #if defined(_MSC_VER) */
+    /* 何もしない */
+    (void)dwThreadID; /* 使用しない引数警告対策 */
+    (void)threadName; /* 使用しない引数警告対策 */
 #endif /* #if defined(_MSC_VER) */
 }
 

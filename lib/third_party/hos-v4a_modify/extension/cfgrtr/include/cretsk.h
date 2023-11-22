@@ -1,3 +1,9 @@
+#if 1
+/**
+ * hos-v4a の cfgrtr\include\cretsk.h
+ * をもとに改変
+ */
+#endif
 // ---------------------------------------------------------------------------
 //  Hyper Operating System V4  コンフィギュレーター                           
 //    CRE_TSK API の処理                                                      

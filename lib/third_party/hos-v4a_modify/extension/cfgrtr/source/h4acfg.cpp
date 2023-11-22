@@ -1,3 +1,9 @@
+#if 1
+/**
+ * hos-v4a の cfgrtr\source\h4acfg.cpp
+ * をもとに改変
+ */
+#endif
 /**
  *  Hyper Operating System V4 Advance Configurator
  *

@@ -55,7 +55,7 @@ add_subdirectory(${WORKSPACE_ROOT_DIR}/lib/cmake_hos-v4a_win32/aplfw_ex aplfw_ex
 set(APLFW_WIN32_SAMPLE_DIR  "${WORKSPACE_ROOT_DIR}/lib/third_party/hos-v4a/aplfw/sample/win/win32")
 
 find_file(SYSTEM_CONFIG_FILE system.cfg
-    PATH ${APLFW_WIN32_SAMPLE_DIR}/
+    PATH ${WORKSPACE_ROOT_DIR}/lib/third_party/hos-v4a_modify/extension/aplfw/sample/win/win32
 )
 
 if(MSVC)

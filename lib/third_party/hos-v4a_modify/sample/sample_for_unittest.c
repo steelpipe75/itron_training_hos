@@ -161,7 +161,7 @@ void Sample_Task(VP_INT exinf)
 {
 	int num;
 #if 1
-	int eat_count = 0;
+	int tsk_eat_count = 0;
 #endif
 
 	num = (int)exinf;
@@ -205,8 +205,8 @@ void Sample_Task(VP_INT exinf)
 		print_state(num, "eating");
 		rand_wait();
 #if 1
-		eat_count++;
-		if(eat_count >= 5){
+		tsk_eat_count++;
+		if(tsk_eat_count >= 5){
 			set_flg(flgid_gtest, 1);
 		}
 #endif

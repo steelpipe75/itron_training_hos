@@ -32,6 +32,9 @@ SYSPRC_HANDLE SysPrc_Create(void (*pfncEntry)(void), VPARAM Param, void *pStack,
 	ctsk.itskpri = (PRI)Priority;
 	ctsk.stksz   = (SIZE)StackSize;
 	ctsk.stk     = pStack;
+#if 1
+	ctsk.dsname  = "SysPrc_Create(TODO)"; /* TODO */
+#endif
 	erid = acre_tsk(&ctsk);
 	if ( erid < 0 )
 	{

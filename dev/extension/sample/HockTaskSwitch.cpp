@@ -12,8 +12,13 @@ extern "C" void _kernel_tsk_swi(ID tskid_old, ID tskid_new)
 
 CHockTaskSwitch::CHockTaskSwitch()
 {
-    const char *fileName = "HockTaskSwitch.txt";
+    this->start_time = std::chrono::steady_clock::now();
+    const char *fileName = "HockTaskSwitch.csv";
     this->ofs = new std::ofstream(fileName);
+    *(this->ofs)    << "tskid_old"      << "," 
+                    << "tskid_new"      << ","
+                    << "diff_time_ms"
+                    << std::endl;
 }
 
 CHockTaskSwitch::~CHockTaskSwitch()
@@ -23,6 +28,11 @@ CHockTaskSwitch::~CHockTaskSwitch()
 
 void CHockTaskSwitch::HockTaskSwitch(ID tskid_old, ID tskid_new)
 {
-    *(this->ofs) << tskid_old << ", " << tskid_new << std::endl;
+    auto crrent_time = std::chrono::steady_clock::now();
+    auto diff_time_ms = std::chrono::duration_cast<std::chrono::microseconds>(crrent_time - start_time).count();
+    *(this->ofs)    << tskid_old    << "," 
+                    << tskid_new    << ","
+                    << diff_time_ms
+                    << std::endl;
 }
 

@@ -67,7 +67,7 @@ include(GoogleTest)
 set(WIN32_SAMPLE_DIR    "${WORKSPACE_ROOT_DIR}/lib/third_party/hos-v4a/sample/win/win32")
 
 find_file(SYSTEM_CONFIG_FILE system.cfg
-    PATH ${WIN32_SAMPLE_DIR}/
+    PATH ${WORKSPACE_ROOT_DIR}/lib/third_party/hos-v4a_modify/extension/sample/win/win32/
 )
 
 if(MSVC)

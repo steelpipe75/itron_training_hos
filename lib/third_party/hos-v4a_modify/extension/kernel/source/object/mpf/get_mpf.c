@@ -1,3 +1,9 @@
+#if 1
+/**
+ * hos-v4a の kernel\source\object\mpf\get_mpf.c
+ * をもとに改変
+ */
+#endif
 /** 
  *  Hyper Operating System V4 Advance
  *

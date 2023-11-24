@@ -289,8 +289,12 @@ set(MPFOBJ_DIR ${KERNEL_OBJ_DIR}/mpf)
 set(KERNEL_SRCS ${KERNEL_SRCS}
     ${MPFOBJ_DIR}/acre_mpf.c
     ${MPFOBJ_DIR}/kcre_mpf.c
-    ${MPFOBJ_DIR}/get_mpf.c
-    ${MPFOBJ_DIR}/pget_mpf.c
+    # ${MPFOBJ_DIR}/get_mpf.c
+    ${KERNEL_EXT_SRC_DIR}/object/mpf/get_mpf.c
+    # ${MPFOBJ_DIR}/pget_mpf.c
+    ${KERNEL_EXT_SRC_DIR}/object/mpf/pget_mpf.c
+    # ${MPFOBJ_DIR}/tget_mpf.c
+    ${KERNEL_EXT_SRC_DIR}/object/mpf/tget_mpf.c
     ${MPFOBJ_DIR}/rel_mpf.c
 )
 

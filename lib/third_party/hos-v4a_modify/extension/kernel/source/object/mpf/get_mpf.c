@@ -56,7 +56,11 @@ ER get_mpf(ID mpfid, VP *p_blk)
  * @retval E_RLWAI  %jp{待ち状態の強制解除(待ち状態の間にrel_waiを受付)}%en{Forced release from waiting(accept rel_wai while waiting)}
  * @retval E_DLT    %jp{待ちオブジェクトの削除(待ち状態の間に固定長メモリプールが削除)}%en{Waiting object deleted(fixed-sized memory pool is deleted waiting)}
  */
+#if 0
 ER get_mpf(ID mpfid, VP *p_blk)
+#else
+ER get_mpf_with_log(ID mpfid, VP *p_blk, const char* file, unsigned int line)
+#endif
 {
 	_KERNEL_T_MPFCB_PTR  mpfcb;
 	_KERNEL_T_TSKHDL     tskhdl;

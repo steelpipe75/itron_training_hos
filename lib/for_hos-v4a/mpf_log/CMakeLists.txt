@@ -1,0 +1,63 @@
+# 動作確認できたCMakeのバージョン
+cmake_minimum_required(VERSION 3.16)
+
+# project情報
+project(set_thread_name
+    DESCRIPTION "lib mpf_log for hos-v4a "
+    LANGUAGES C CXX
+)
+
+# コンパイル情報をJSON形式で出力
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+
+# in-source ビルドガード
+if(${CMAKE_SOURCE_DIR} STREQUAL ${CMAKE_BINARY_DIR})
+    message(FATAL_ERROR "In-source builds not allowed. Please make a new directory (called a build directory) and run CMake from there. You may need to remove CMakeCache.txt. ")
+endif()
+
+#################################################################################
+
+set(default_build_type "Debug")
+if(NOT CMAKE_BUILD_TYPE)
+    message(STATUS "Setting build type to '${default_build_type}' as none was specified.")
+    set(CMAKE_BUILD_TYPE "${default_build_type}" CACHE
+        STRING "Choose the type of build." FORCE)
+    set_property(CACHE CMAKE_BUILD_TYPE PROPERTY STRINGS
+        "Debug" "Release")
+endif()
+
+#################################################################################
+
+if(NOT WORKSPACE_ROOT_DIR)
+    set(WORKSPACE_ROOT_DIR "${CMAKE_SOURCE_DIR}/../..")
+endif()
+
+#################################################################################
+
+if(NOT KERNEL_EX_DIR)
+    set(KERNEL_EX_DIR "${WORKSPACE_ROOT_DIR}/lib/third_party/hos-v4a_modify/extension/kernel")
+endif()
+
+#################################################################################
+
+if(NOT KERNEL_DIR)
+    set(KERNEL_EX_DIR "${WORKSPACE_ROOT_DIR}/lib/third_party/hos-v4a/kernel")
+endif()
+
+#################################################################################
+
+add_library(mpf_log STATIC
+    mpf_log.cpp
+)
+
+target_include_directories(mpf_log PUBLIC
+    .
+    ${KERNEL_EX_DIR}/include
+    ${KERNEL_DIR}/include
+)
+
+#################################################################################
+
+include(${WORKSPACE_ROOT_DIR}/lib/cmake_utility/compile_option/compile_opion_helper.cmake)
+target_compile_options_helper(mpf_log) 
+

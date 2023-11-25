@@ -18,6 +18,9 @@
 
 #include "core/core.h"
 #include "object/mpfobj.h"
+#if 1
+#include "mpf_log.h"
+#endif
 
 
 
@@ -106,6 +109,11 @@ ER pget_mpf_with_log(ID mpfid, VP *p_blk, const char* file, unsigned int line)
 		ercd = E_TMOUT;
 	}
 	
+#if 1
+	if(ercd == E_OK){
+		mpf_log_write("pget_mpf", mpfid, *p_blk, file, line);
+	}
+#endif
 	_KERNEL_LEAVE_SVC();	/* %jp{オブジェクト未生成}%en{Non-existant object} */
 	
 	return ercd;

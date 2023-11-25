@@ -18,6 +18,9 @@
 
 #include "core/core.h"
 #include "object/mpfobj.h"
+#if 1
+#include "mpf_log.h"
+#endif
 
 
 
@@ -77,6 +80,9 @@ ER rel_mpf_with_log(ID mpfid, VP blk, const char* file, unsigned int line)
 	/* %jp{コントロールブロック取得} */
 	mpfcb = _KERNEL_MPF_ID2MPFCB(mpfid);
 
+#if 1
+	mpf_log_write("rel_pf", mpfid, blk, file, line);
+#endif
 	/* %jp{待ち行列先頭からタスク取り出し} */
 	tskhdl = _KERNEL_MPF_RMH_QUE(mpfcb);
 	if ( tskhdl != _KERNEL_TSKHDL_NULL )

@@ -429,7 +429,13 @@ ER      tget_mpf(ID mpfid, VP *p_blk, TMO tmout, const char* file, unsigned int 
 															/**< %jp{固定長メモリブロックの獲得(タイムアウトあり)} */
 #define tget_mpf(mpfid, p_blk, tmout)		tget_mpf_with_log((mpfid), (p_blk), (tmout), __FILE__, __LINE__)
 #endif
+#if 0
 ER      rel_mpf(ID mpfid, VP blk);							/**< %jp{固定長メモリブロックの返却} */
+#else
+ER      rel_mpf_with_log(ID mpfid, VP blk, const char* file, unsigned int line);	
+															/**< %jp{固定長メモリブロックの返却} */
+#define rel_mpf(mpfid, p_blk)				rel_mpf_with_log((mpfid), (p_blk), __FILE__, __LINE__)
+#endif
 ER      ref_mpf(ID mpfid, T_RMPF *pk_rmpf);					/**< %jp{固定長メモリブロックの状態参照} */
 
 

@@ -295,7 +295,8 @@ set(KERNEL_SRCS ${KERNEL_SRCS}
     ${KERNEL_EXT_SRC_DIR}/object/mpf/pget_mpf.c
     # ${MPFOBJ_DIR}/tget_mpf.c
     ${KERNEL_EXT_SRC_DIR}/object/mpf/tget_mpf.c
-    ${MPFOBJ_DIR}/rel_mpf.c
+    # ${MPFOBJ_DIR}/rel_mpf.c
+    ${KERNEL_EXT_SRC_DIR}/object/mpf/rel_mpf.c
 )
 
 # System Time Management

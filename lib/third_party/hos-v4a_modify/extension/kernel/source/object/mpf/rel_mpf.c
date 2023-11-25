@@ -36,7 +36,11 @@ ER get_mpf(ID mpfid, VP *p_blk)
 #else
 
 
+#if 0
 ER rel_mpf(ID mpfid, VP blk)
+#else
+ER rel_mpf_with_log(ID mpfid, VP blk, const char* file, unsigned int line)
+#endif
 {
 	_KERNEL_T_MPFCB_PTR mpfcb;
 	_KERNEL_T_TSKHDL    tskhdl;

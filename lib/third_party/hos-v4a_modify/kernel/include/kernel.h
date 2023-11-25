@@ -73,9 +73,6 @@ typedef struct t_ctsk
 	PRI     itskpri;		/**< %jp{タスクの起動時優先度} */
 	SIZE    stksz;			/**< %jp{スタック領域のサイズ(バイト数)} */
 	VP      stk;			/**< %jp{スタック領域の先頭番地} */
-#if 1
-	const char* dsname;
-#endif
 } T_CTSK;
 
 /** %jp{タスク状態} */
@@ -300,11 +297,6 @@ extern "C" {
 
 /* %jp{OSの起動}%en{Kernel Management Functions} */
 ER      vsta_knl(void);										/**< %jp{カーネルの開始(独自サービスコール)}%en{Start Kernel(HOS original)} */
-#if 1
-
-/* %jp{OSの終了} */
-void    vter_knl(void);										/**< %jp{カーネルの終了(独自サービスコール)} */
-#endif
 
 /* %jp{タスク管理機能}%en{Task Management Functions} */
 ER      cre_tsk(ID tskid, const T_CTSK *pk_ctsk);			/**< %jp{タスクの生成}%en{Create Task} */
@@ -408,34 +400,10 @@ ER      unl_mtx(ID mtxid);									/**< %jp{ミューテックスのロック解
 ER      cre_mpf(ID mpfid, const T_CMPF *pk_cmpf);			/**< %jp{固定長メモリプールの生成} */
 ER_ID   acre_mpf(const T_CMPF *pk_cmpf);					/**< %jp{固定長メモリプールの生成(ID番号自動割付け)} */
 ER      del_mpf(ID mpfid);									/**< %jp{固定長メモリプールの削除} */
-#if 0
 ER      get_mpf(ID mpfid, VP *p_blk);						/**< %jp{固定長メモリブロックの獲得} */
-#else
-ER      get_mpf_with_log(ID mpfid, VP *p_blk, const char* file, unsigned int line);
-															/**< %jp{固定長メモリブロックの獲得} */
-#define get_mpf(mpfid, p_blk)				get_mpf_with_log((mpfid), (p_blk), __FILE__, __LINE__)
-#endif
-#if 0
 ER      pget_mpf(ID mpfid, VP *p_blk);						/**< %jp{固定長メモリブロックの獲得(ポーリング)} */
-#else
-ER      pget_mpf_with_log(ID mpfid, VP *p_blk, const char* file, unsigned int line);
-															/**< %jp{固定長メモリブロックの獲得(ポーリング)} */
-#define pget_mpf(mpfid, p_blk)				pget_mpf_with_log((mpfid), (p_blk), __FILE__, __LINE__)
-#endif
-#if 0
 ER      tget_mpf(ID mpfid, VP *p_blk, TMO tmout);			/**< %jp{固定長メモリブロックの獲得(タイムアウトあり)} */
-#else
-ER      tget_mpf(ID mpfid, VP *p_blk, TMO tmout, const char* file, unsigned int line);
-															/**< %jp{固定長メモリブロックの獲得(タイムアウトあり)} */
-#define tget_mpf(mpfid, p_blk, tmout)		tget_mpf_with_log((mpfid), (p_blk), (tmout), __FILE__, __LINE__)
-#endif
-#if 0
 ER      rel_mpf(ID mpfid, VP blk);							/**< %jp{固定長メモリブロックの返却} */
-#else
-ER      rel_mpf_with_log(ID mpfid, VP blk, const char* file, unsigned int line);	
-															/**< %jp{固定長メモリブロックの返却} */
-#define rel_mpf(mpfid, p_blk)				rel_mpf_with_log((mpfid), (p_blk), __FILE__, __LINE__)
-#endif
 ER      ref_mpf(ID mpfid, T_RMPF *pk_rmpf);					/**< %jp{固定長メモリブロックの状態参照} */
 
 

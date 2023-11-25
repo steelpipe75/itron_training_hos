@@ -65,6 +65,10 @@ set(KERNEL_EXT_INC_DIR  "${KERNEL_EXT_DIR}/include")
 
 #################################################################################
 
+add_subdirectory(${WORKSPACE_ROOT_DIR}/lib/for_hos-v4a/mpf_log mpf_log)
+
+#################################################################################
+
 # Dispatcher
 set(DSP_DIR ${KERNEL_CORE_DIR}/dsp)
 set(KERNEL_SRCS ${KERNEL_SRCS}
@@ -289,9 +293,14 @@ set(MPFOBJ_DIR ${KERNEL_OBJ_DIR}/mpf)
 set(KERNEL_SRCS ${KERNEL_SRCS}
     ${MPFOBJ_DIR}/acre_mpf.c
     ${MPFOBJ_DIR}/kcre_mpf.c
-    ${MPFOBJ_DIR}/get_mpf.c
-    ${MPFOBJ_DIR}/pget_mpf.c
-    ${MPFOBJ_DIR}/rel_mpf.c
+    # ${MPFOBJ_DIR}/get_mpf.c
+    ${KERNEL_EXT_SRC_DIR}/object/mpf/get_mpf.c
+    # ${MPFOBJ_DIR}/pget_mpf.c
+    ${KERNEL_EXT_SRC_DIR}/object/mpf/pget_mpf.c
+    # ${MPFOBJ_DIR}/tget_mpf.c
+    ${KERNEL_EXT_SRC_DIR}/object/mpf/tget_mpf.c
+    # ${MPFOBJ_DIR}/rel_mpf.c
+    ${KERNEL_EXT_SRC_DIR}/object/mpf/rel_mpf.c
 )
 
 # System Time Management
@@ -374,7 +383,7 @@ target_include_directories(hosv4a_ex PUBLIC
     ${KERNEL_INC_IRC_DIR}
 )
 
-target_link_libraries(hosv4a_ex PUBLIC set_thread_name)
+target_link_libraries(hosv4a_ex PUBLIC set_thread_name mpf_log)
 
 #################################################################################
 

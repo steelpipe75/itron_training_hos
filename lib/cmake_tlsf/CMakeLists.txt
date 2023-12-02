@@ -32,9 +32,13 @@ if(NOT WORKSPACE_ROOT_DIR)
     set(WORKSPACE_ROOT_DIR "${CMAKE_SOURCE_DIR}/../..")
 endif()
 
+set(TLSF_DIR ${WORKSPACE_ROOT_DIR}/lib/third_party/tlsf)
+
 #################################################################################
 
-set(TLSF_DIR ${WORKSPACE_ROOT_DIR}/lib/third_party/tlsf)
+option(BUILD_TLSF_SAMPLE "build tlsf sample" OFF)
+
+#################################################################################
 
 add_library(tlsf STATIC
     ${TLSF_DIR}/tlsf.c
@@ -44,8 +48,28 @@ target_include_directories(tlsf PUBLIC
     ${TLSF_DIR}
 )
 
-#################################################################################
-
 include(${WORKSPACE_ROOT_DIR}/lib/cmake_utility/compile_option/compile_opion_helper.cmake)
 target_compile_options_helper(tlsf) 
+
+#################################################################################
+
+if(BUILD_TLSF_SAMPLE)
+    add_executable(tlsf_sample
+        tlsf_sample.c
+    )
+
+    target_include_directories(tlsf_sample PUBLIC
+        ${TLSF_DIR}
+    )
+
+    target_link_libraries(tlsf_sample
+        tlsf
+    )
+
+    target_compile_options_helper(tlsf_sample) 
+    include(${WORKSPACE_ROOT_DIR}/lib/cmake_utility/configure_file/vs_vscode.cmake)
+    vs_and_vscode_helper(tlsf_sample)
+endif()
+
+#################################################################################
 

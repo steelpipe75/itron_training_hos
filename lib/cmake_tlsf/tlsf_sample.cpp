@@ -5,35 +5,134 @@ extern "C" {
     #include "tlsf.h"
 }
 
-static long long memblock[1024 * 1024 * 1] = {0};
+static long long memblock[1024 * 4] = {0};
+static long long memblock_pool[(1024 * 256 * 1) + (256)] = {0};
+
+TEST(SampleTlsf, StructSize) {
+    printf("tlsf_size()             = %d\n", tlsf_size());
+    printf("tlsf_align_size()       = %d\n", tlsf_align_size());
+    printf("tlsf_block_size_min()   = %d\n", tlsf_block_size_min());
+    printf("tlsf_block_size_max()   = %d\n", tlsf_block_size_max());
+    printf("tlsf_pool_overhead()    = %d\n", tlsf_pool_overhead());
+    printf("tlsf_alloc_overhead()   = %d\n", tlsf_alloc_overhead());
+}
 
 TEST(SampleTlsf, CreateTest) {
-    tlsf_t tlsf_handle = NULL;
-    pool_t pool_handle = NULL;
+    tlsf_t  tlsf_handle = NULL;
+    pool_t  pool_handle = NULL;
+    void*   ptr[128] = { 0 };
+    int     i;
+
+    printf("memblock        = %p\n", memblock);
 
     tlsf_handle = tlsf_create(memblock);
-    pool_handle = tlsf_get_pool(tlsf_handle);
+    printf("tlsf_handle     = %p\n", tlsf_handle);
 
-    printf("memblock    = %p\n", memblock);
-    printf("tlsf_handle = %p\n", tlsf_handle);
-    printf("pool_handle = %p\n", pool_handle);
+    pool_handle = tlsf_add_pool(tlsf_handle, memblock_pool, 1024 * 256);
+    printf("pool_handle     = %p\n", pool_handle);
+
+    for(i = 0; i < 128; i++) {
+        ptr[i] = tlsf_malloc(tlsf_handle, 256);
+        printf("ptr[%3d]        = %p", i, ptr[i]);
+        if((i+1)%4 == 0){
+            printf("\n");
+        }else{
+            printf(" ");
+        }
+    }
+
+    printf("tlsf_check      = %d\n", tlsf_check(tlsf_handle));
+    printf("tlsf_check_pool = %d\n", tlsf_check_pool(pool_handle));
+
+    for(i = 0; i < 128; i++) {
+        tlsf_free(tlsf_handle, ptr[i]);
+    }
+
+    printf("tlsf_check      = %d\n", tlsf_check(tlsf_handle));
+    printf("tlsf_check_pool = %d\n", tlsf_check_pool(pool_handle));
 
     tlsf_destroy(tlsf_handle);
 }
 
 TEST(SampleTlsf, CreateWithPoolTest) {
-    tlsf_t tlsf_handle = NULL;
-    pool_t pool_handle = NULL;
+    tlsf_t  tlsf_handle = NULL;
+    pool_t  pool_handle = NULL;
+    void*   ptr[128] = { 0 };
+    int     i;
 
-    tlsf_handle = tlsf_create_with_pool(memblock, 1024 * 256);
+    printf("memblock        = %p\n", memblock_pool);
+
+    tlsf_handle = tlsf_create_with_pool(memblock_pool, 1024 * 256);
+    printf("tlsf_handle     = %p\n", tlsf_handle);
+
     pool_handle = tlsf_get_pool(tlsf_handle);
+    printf("pool_handle     = %p\n", pool_handle);
 
-    printf("memblock    = %p\n", memblock);
-    printf("tlsf_handle = %p\n", tlsf_handle);
-    printf("pool_handle = %p\n", pool_handle);
+    for(i = 0; i < 128; i++) {
+        ptr[i] = tlsf_malloc(tlsf_handle, 256);
+        printf("ptr[%3d]        = %p", i, ptr[i]);
+        if((i+1)%4 == 0){
+            printf("\n");
+        }else{
+            printf(" ");
+        }
+    }
+
+    printf("tlsf_check      = %d\n", tlsf_check(tlsf_handle));
+    printf("tlsf_check_pool = %d\n", tlsf_check_pool(pool_handle));
+
+    for(i = 0; i < 128; i++) {
+        tlsf_free(tlsf_handle, ptr[i]);
+    }
+
+    printf("tlsf_check      = %d\n", tlsf_check(tlsf_handle));
+    printf("tlsf_check_pool = %d\n", tlsf_check_pool(pool_handle));
 
     tlsf_destroy(tlsf_handle);
 }
 
+
+TEST(SampleTlsf, CreateTestPool2) {
+    tlsf_t  tlsf_handle = NULL;
+    pool_t  pool_handle_1 = NULL;
+    pool_t  pool_handle_2 = NULL;
+    void*   ptr[128] = { 0 };
+    int     i;
+
+    printf("memblock            = %p\n", memblock);
+
+    tlsf_handle = tlsf_create(memblock);
+    printf("tlsf_handle         = %p\n", tlsf_handle);
+
+    pool_handle_1 = tlsf_add_pool(tlsf_handle, &(memblock_pool[0]), 1024 * 8);
+    printf("pool_handle_1       = %p\n", pool_handle_1);
+
+    pool_handle_2 = tlsf_add_pool(tlsf_handle, &(memblock_pool[1024 * 128]), 1024 * 8);
+    printf("pool_handle_2       = %p\n", pool_handle_2);
+
+    for(i = 0; i < 128; i++) {
+        ptr[i] = tlsf_malloc(tlsf_handle, 256);
+        printf("ptr[%3d]        = %p", i, ptr[i]);
+        if((i+1)%4 == 0){
+            printf("\n");
+        }else{
+            printf(" ");
+        }
+    }
+
+    printf("tlsf_check          = %d\n", tlsf_check(tlsf_handle));
+    printf("tlsf_check_pool_1   = %d\n", tlsf_check_pool(pool_handle_1));
+    printf("tlsf_check_pool_2   = %d\n", tlsf_check_pool(pool_handle_2));
+
+    for(i = 0; i < 128; i++) {
+        tlsf_free(tlsf_handle, ptr[i]);
+    }
+
+    printf("tlsf_check          = %d\n", tlsf_check(tlsf_handle));
+    printf("tlsf_check_pool_1   = %d\n", tlsf_check_pool(pool_handle_1));
+    printf("tlsf_check_pool_2   = %d\n", tlsf_check_pool(pool_handle_2));
+
+    tlsf_destroy(tlsf_handle);
+}
 
 

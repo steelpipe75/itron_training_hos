@@ -54,8 +54,13 @@ target_compile_options_helper(tlsf)
 #################################################################################
 
 if(BUILD_TLSF_SAMPLE)
+    set(GTest_DIR ${WORKSPACE_ROOT_DIR}/lib/third_party/googletest)
+    set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
+    add_subdirectory(${GTest_DIR} lib/third_party/googletest)
+    include(GoogleTest)
+
     add_executable(tlsf_sample
-        tlsf_sample.c
+        tlsf_sample.cpp
     )
 
     target_include_directories(tlsf_sample PUBLIC
@@ -63,7 +68,7 @@ if(BUILD_TLSF_SAMPLE)
     )
 
     target_link_libraries(tlsf_sample
-        tlsf
+        tlsf gmock_main
     )
 
     target_compile_options_helper(tlsf_sample) 

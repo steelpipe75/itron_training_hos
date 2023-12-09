@@ -86,6 +86,11 @@ TEST(SampleTlsf, CreateTest) {
     printf("tlsf_check      = %d\n", tlsf_check(tlsf_handle));
     printf("tlsf_check_pool = %d\n", tlsf_check_pool(pool_handle));
 
+    tlsf_walk_pool(pool_handle, NULL, NULL);
+
+    printf("tlsf_check      = %d\n", tlsf_check(tlsf_handle));
+    printf("tlsf_check_pool = %d\n", tlsf_check_pool(pool_handle));
+
     for(i = 0; i < 128; i++) {
         tlsf_free(tlsf_handle, ptr[i]);
     }

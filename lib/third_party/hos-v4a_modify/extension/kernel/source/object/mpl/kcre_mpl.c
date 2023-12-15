@@ -1,53 +1,43 @@
-/** 
- *  Hyper Operating System V4 Advance
- *
- * @file  acre_mpf.c
- * @brief %jp{固定長メモリプールの生成}%en{}
- *
- * Copyright (C) 1998-2006 by Project HOS
- * http://sourceforge.jp/projects/hos/
- */
-
-
+/* hos v4a の kcre_mpf.c を元に改変 */
 
 #include "core/core.h"
-#include "object/mpfobj.h"
+#include "object/mplobj.h"
 
 
 /* %jp{メモリ不足エラーチェックサポートの判定} */
-#if (_KERNEL_SPT_CRE_MPF && _KERNEL_SPT_CRE_MPF_E_NOMEM) || (_KERNEL_SPT_ACRE_MPF && _KERNEL_SPT_ACRE_MPF_E_NOMEM)
-#define _KERNEL_SPT_KCRE_MPF_E_NOMEM	TRUE
+#if (_KERNEL_SPT_CRE_MPL && _KERNEL_SPT_CRE_MPL_E_NOMEM) || (_KERNEL_SPT_ACRE_MPL && _KERNEL_SPT_ACRE_MPL_E_NOMEM)
+#define _KERNEL_SPT_KCRE_MPL_E_NOMEM	TRUE
 #else
-#define _KERNEL_SPT_KCRE_MPF_E_NOMEM	FALSE
+#define _KERNEL_SPT_KCRE_MPL_E_NOMEM	FALSE
 #endif
 
 
-void _kernel_set_mpf(_KERNEL_T_MPFCB_PTR mpfcb, _KERNEL_MPF_T_BLKCNT blkcnt, _KERNEL_MPF_T_BLKSZ blksz, VP mpf);
+void _kernel_set_mpl(_KERNEL_T_MPLCB_PTR mplcb, _KERNEL_MPL_T_BLKCNT blkcnt, _KERNEL_MPL_T_BLKSZ blksz, VP mpl);
 
 
-/** %jp{固定長メモリプールの生成}%en{Create mpfaphore}
- * @param  mpfid	%jp{生成対象の固定長メモリプールのID番号}%en{ID number of the mpfaphore to be created}
- * @param  pk_ctsk	%jp{固定長メモリプール生成情報を入れたパケットへのポインタ}%en{Pointer to the packet containing the mpfaphore creation information}
+/** %jp{可変長メモリプールの生成}
+ * @param  mplid	%jp{生成対象の可変長メモリプールのID番号}
+ * @param  pk_ctsk	%jp{可変長メモリプール生成情報を入れたパケットへのポインタ}
  * @retval E_OK     %jp{正常終了}%en{Normal completion}
  * @retval E_NOMEM  %jp{メモリ不足}%en{Insufficient memory}
  */
-ER _kernel_cre_mpf(ID mpfid, const T_CMPF *pk_cmpf)
+ER _kernel_cre_mpl(ID mplid, const T_CMPL *pk_cmpl)
 {
-	_KERNEL_T_MPFCB    *mpfcb;
-	_KERNEL_T_MPFCB_RO *mpfcb_ro;
-	VP                 mpf;
+	_KERNEL_T_MPLCB    *mplcb;
+	_KERNEL_T_MPLCB_RO *mplcb_ro;
+	VP                 mpl;
 	
 	/* %jp{メモリ確保}%en{get memory} */
-#if _KERNEL_MPFCB_ALGORITHM == _KERNEL_MPFCB_ALG_BLKARRAY
-	{	/*  %jp{MPFCB領域がブロック管理の場合} */
+#if _KERNEL_MPLCB_ALGORITHM == _KERNEL_MPLCB_ALG_BLKARRAY
+	{	/*  %jp{MPLCB領域がブロック管理の場合} */
 
 		/* メモリ確保 */
-		if ( pk_cmpf->mpf == NULL )
+		if ( pk_cmpl->mpl == NULL )
 		{
-			mpf = _KERNEL_SYS_ALC_HEP(TSZ_MPF(pk_cmpf->blkcnt, pk_cmpf->blksz));
+			mpl = _KERNEL_SYS_ALC_HEP(TSZ_MPL(pk_cmpl->blkcnt, pk_cmpl->blksz));
 		/* %jp{メモリ不足チェック} */
-#if _KERNEL_SPT_KCRE_MPF_E_NOMEM
-			if ( mpf == NULL )
+#if _KERNEL_SPT_KCRE_MPL_E_NOMEM
+			if ( mpl == NULL )
 			{
 				return E_NOMEM;
 			}
@@ -55,30 +45,30 @@ ER _kernel_cre_mpf(ID mpfid, const T_CMPF *pk_cmpf)
 		}
 		else
 		{
-			mpf = pk_cmpf->mpf;
+			mpl = pk_cmpl->mpl;
 		}
-		mpfcb    = _KERNEL_MPF_ID2MPFCB(mpfid);
-		mpfcb_ro = mpfcb;
+		mplcb    = _KERNEL_MPL_ID2MPLCB(mplid);
+		mplcb_ro = mplcb;
 	}
-#elif _KERNEL_MPFCB_ALGORITHM == _KERNEL_MPFCB_ALG_PTRARRAY
-#if _KERNEL_MPFCB_SPLIT_RO
-	{	/* %jp{MPFCB領域がポインタ管理で、ROM/RAM分離の場合} */
+#elif _KERNEL_MPLCB_ALGORITHM == _KERNEL_MPLCB_ALG_PTRARRAY
+#if _KERNEL_MPLCB_SPLIT_RO
+	{	/* %jp{MPLCB領域がポインタ管理で、ROM/RAM分離の場合} */
 		VP   mem;
 		SIZE memsz;
 
 		/* %jp{メモリサイズ決定} */
-		memsz  = _KERNEL_SYS_ALG_HEP(sizeof(_KERNEL_T_MPFCB));
-		memsz += _KERNEL_SYS_ALG_HEP(sizeof(_KERNEL_T_MPFCB_ROM));
-		if ( pk_cmpf->mpf == NULL )
+		memsz  = _KERNEL_SYS_ALG_HEP(sizeof(_KERNEL_T_MPLCB));
+		memsz += _KERNEL_SYS_ALG_HEP(sizeof(_KERNEL_T_MPLCB_ROM));
+		if ( pk_cmpl->mpl == NULL )
 		{
-			memsz += TSZ_MPF(pk_cmpf->blkcnt, pk_cmpf->blksz);
+			memsz += TSZ_MPL(pk_cmpl->blkcnt, pk_cmpl->blksz);
 		}
 
 		/* %jp{メモリ確保} */
 		mem = _KERNEL_SYS_ALC_HEP(memsz);
 
 		/* %jp{メモリ不足チェック} */
-#if _KERNEL_SPT_KCRE_MPF_E_NOMEM
+#if _KERNEL_SPT_KCRE_MPL_E_NOMEM
 		if ( mem == NULL )
 		{
 			return E_NOMEM;
@@ -86,36 +76,36 @@ ER _kernel_cre_mpf(ID mpfid, const T_CMPF *pk_cmpf)
 #endif
 		
 		/* %jp{メモリ割り当て} */
-		mpfcb    = (_KERNEL_T_MPFCB *)mem;
-		mpfcb_ro = (_KERNEL_T_MPFCB_ROM *)((B *)mem + _KERNEL_SYS_ALG_HEP(sizeof(_KERNEL_T_MPFCB)));
-		mpfcb->mpfcb_ro = mpfcb_ro;
-		_KERNEL_TSK_ID2MPFCB(mpfid) = mpfcb;
-		if ( pk_cmpf->mpf == NULL )
+		mplcb    = (_KERNEL_T_MPLCB *)mem;
+		mplcb_ro = (_KERNEL_T_MPLCB_ROM *)((B *)mem + _KERNEL_SYS_ALG_HEP(sizeof(_KERNEL_T_MPLCB)));
+		mplcb->mplcb_ro = mplcb_ro;
+		_KERNEL_TSK_ID2MPLCB(mplid) = mplcb;
+		if ( pk_cmpl->mpl == NULL )
 		{
-			mpf = (_KERNEL_T_MPFCB_ROM *)((B *)mem + _KERNEL_SYS_ALG_HEP(sizeof(_KERNEL_T_MPFCB)) + _KERNEL_SYS_ALG_HEP(sizeof(_KERNEL_T_MPFCB_ROM)));
+			mpl = (_KERNEL_T_MPLCB_ROM *)((B *)mem + _KERNEL_SYS_ALG_HEP(sizeof(_KERNEL_T_MPLCB)) + _KERNEL_SYS_ALG_HEP(sizeof(_KERNEL_T_MPLCB_ROM)));
 		}
 		else
 		{
-			mpf = pk_cmpf->mpf;
+			mpl = pk_cmpl->mpl;
 		}
 	}
 #else
-	{	/* %jp{MPFCB領域がポインタ管理で、ROM/RAM統合の場合} */
+	{	/* %jp{MPLCB領域がポインタ管理で、ROM/RAM統合の場合} */
 		VP   mem;
 		SIZE memsz;
 
 		/* %jp{メモリサイズ決定} */
-		memsz = _KERNEL_SYS_ALG_HEP(sizeof(_KERNEL_T_MPFCB));
-		if ( pk_cmpf->mpf == NULL )
+		memsz = _KERNEL_SYS_ALG_HEP(sizeof(_KERNEL_T_MPLCB));
+		if ( pk_cmpl->mpl == NULL )
 		{
-			memsz += TSZ_MPF(pk_cmpf->blkcnt, pk_cmpf->blksz)
+			memsz += TSZ_MPL(pk_cmpl->blkcnt, pk_cmpl->blksz)
 		}
 
 		/* %jp{メモリ確保} */
 		mem = _KERNEL_SYS_ALC_HEP(memsz);
 
 		/* %jp{メモリ不足チェック} */
-#if _KERNEL_SPT_KCRE_MPF_E_NOMEM
+#if _KERNEL_SPT_KCRE_MPL_E_NOMEM
 		if ( mem == NULL )
 		{
 			return E_NOMEM;
@@ -123,63 +113,63 @@ ER _kernel_cre_mpf(ID mpfid, const T_CMPF *pk_cmpf)
 #endif
 
 		/* %jp{メモリ割り当て} */
-		mpfcb    = (_KERNEL_T_MPFCB *)mem;
-		mpfcb_ro = mpfcb;
-		_KERNEL_MPF_ID2MPFCB(mpfid) = mpfcb;
-		if ( pk_cmpf->mpf == NULL )
+		mplcb    = (_KERNEL_T_MPLCB *)mem;
+		mplcb_ro = mplcb;
+		_KERNEL_MPL_ID2MPLCB(mplid) = mplcb;
+		if ( pk_cmpl->mpl == NULL )
 		{
-			mpf = (_KERNEL_T_MPFCB_ROM *)((B *)mem + _KERNEL_SYS_ALG_HEP(sizeof(_KERNEL_T_MPFCB)));
+			mpl = (_KERNEL_T_MPLCB_ROM *)((B *)mem + _KERNEL_SYS_ALG_HEP(sizeof(_KERNEL_T_MPLCB)));
 		}
 		else
 		{
-			mpf = pk_cmpf->mpf;
+			mpl = pk_cmpl->mpl;
 		}
 	}
 #endif
 #endif
 		
 	/* %jp{メンバ初期化} */
-	_KERNEL_MPF_SET_MPFATR(mpfcb_ro, pk_cmpf->mpfatr);
-	_KERNEL_MPF_SET_BLKCNT(mpfcb_ro, pk_cmpf->blkcnt);
-	_KERNEL_MPF_SET_BLKSZ(mpfcb_ro, _KERNEL_TSZ_ALIGNED(pk_cmpf->blksz));
-	_KERNEL_MPF_SET_MPF(mpfcb_ro, mpf);
-	_KERNEL_CRE_QUE(_KERNEL_MPF_GET_QUE(mpfcb));
-	_kernel_set_mpf(mpfcb, pk_cmpf->blkcnt, pk_cmpf->blksz, mpf);
+	_KERNEL_MPL_SET_MPLATR(mplcb_ro, pk_cmpl->mplatr);
+	_KERNEL_MPL_SET_BLKCNT(mplcb_ro, pk_cmpl->blkcnt);
+	_KERNEL_MPL_SET_BLKSZ(mplcb_ro, _KERNEL_TSZ_ALIGNED(pk_cmpl->blksz));
+	_KERNEL_MPL_SET_MPL(mplcb_ro, mpl);
+	_KERNEL_CRE_QUE(_KERNEL_MPL_GET_QUE(mplcb));
+	_kernel_set_mpl(mplcb, pk_cmpl->blkcnt, pk_cmpl->blksz, mpl);
 
 	return E_OK;
 }
 
 
-void _kernel_set_mpf(_KERNEL_T_MPFCB_PTR mpfcb, _KERNEL_MPF_T_BLKCNT blkcnt, _KERNEL_MPF_T_BLKSZ blksz, VP mpf)
+void _kernel_set_mpl(_KERNEL_T_MPLCB_PTR mplcb, _KERNEL_MPL_T_BLKCNT blkcnt, _KERNEL_MPL_T_BLKSZ blksz, VP mpl)
 {
 	UINT i;
 
-#if _KERNEL_MPF_ALGORITHM == _KERNEL_MPF_ALG_CHAIN_PTR		/* %jp{ポインタ管理} */
+#if _KERNEL_MPL_ALGORITHM == _KERNEL_MPL_ALG_CHAIN_PTR		/* %jp{ポインタ管理} */
 	{
 		VB *ptr, *next;
 
-		ptr = (VB *)mpf;
-		_KERNEL_MPF_SET_FREBLK(mpfcb, ptr);
+		ptr = (VB *)mpl;
+		_KERNEL_MPL_SET_FREBLK(mplcb, ptr);
 		for ( i = 0; i < blkcnt - 1; i++ )
 		{
 			next = ptr + blksz;
-			*(_KERNEL_MPFCB_T_BLKHDL *)ptr = next;
+			*(_KERNEL_MPLCB_T_BLKHDL *)ptr = next;
 			ptr = next;
 		}
-		*(_KERNEL_MPFCB_T_BLKHDL *)ptr = NULL;
+		*(_KERNEL_MPLCB_T_BLKHDL *)ptr = NULL;
 	}
-#elif  _KERNEL_MPF_ALGORITHM == _KERNEL_MPF_ALG_CHAIN_NUM	/* %jp{ブロック番号管理} */
+#elif  _KERNEL_MPL_ALGORITHM == _KERNEL_MPL_ALG_CHAIN_NUM	/* %jp{ブロック番号管理} */
 	{
 		VB *ptr;
 
-		ptr = (VB *)mpf;
-		_KERNEL_MPF_SET_FREBLK(mpfcb, 1);
+		ptr = (VB *)mpl;
+		_KERNEL_MPL_SET_FREBLK(mplcb, 1);
 		for ( i = 1; i < blkcnt - 1; i++ )
 		{
-			*(_KERNEL_MPFCB_T_BLKHDL *)ptr = (i + 1);
+			*(_KERNEL_MPLCB_T_BLKHDL *)ptr = (i + 1);
 			ptr += blksz;
 		}
-		*(_KERNEL_MPFCB_T_BLKHDL *)ptr = 0;
+		*(_KERNEL_MPLCB_T_BLKHDL *)ptr = 0;
 	}
 #endif
 }

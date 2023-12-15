@@ -49,7 +49,11 @@
 
 #define TSZ_MBF(msgcnt, msgsz)		((SIZE)(msgcnt) * (SIZE)((msgsz) + sizeof(UINT)))
 
+#if 0
 #define TSZ_MPL(blkcnt, blksz)		((SIZE)(blkcnt) * ((SIZE)_KERNEL_TSZ_ALIGNED(blksz) + (SZIE)))
+#else
+#define TSZ_MPL(blkcnt, blksz)		((SIZE)(blkcnt) * ((SIZE)_KERNEL_TSZ_ALIGNED(blksz)))
+#endif
 
 
 
@@ -249,6 +253,26 @@ typedef struct t_rmpf
 } T_RMPF;
 
 
+#if 1
+/** %jp{可変長メモリプール生成情報} */
+typedef struct t_cmpl
+{
+	ATR		mplatr;			/**< %jp{可変長メモリプール属性} */
+	UINT	blkcnt;			/**< %jp{獲得できるメモリブロック数(個数)} */
+	UINT	blksz;			/**< %jp{メモリブロックのサイズ(バイト数)} */
+	VP		mpl;			/**< %jp{可変長メモリプール領域の先頭番地} */
+} T_CMPL;
+
+
+/** %jp{可変長メモリプール状態} */
+typedef struct t_rmpl
+{
+	ID		wtskid;			/**< %jp{可変長メモリプールの待ち行列の先頭のタスクのID番号} */
+	UINT	fblkcnt;		/**< %jp{可変長メモリプールの空きメモリブロック数(個数)} */
+} T_RMPL;
+
+
+#endif
 /** %jp{周期ハンドラ生成情報} */
 typedef struct t_ccyc
 {

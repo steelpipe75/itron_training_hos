@@ -317,6 +317,32 @@ C言語構文(例えばtypedefなど)はこの中には記載せず、マクロ�
 
 
 
+/* ---------------------------------------------- */
+/*  Variable-sized Memory Pools                   */
+/* ---------------------------------------------- */
+
+/* Attribute */
+#define _KERNEL_CFG_MPL_TA_TFIFO		TRUE				/**< %jp{TA_TFIFO属性に対応する} */
+#define _KERNEL_CFG_MPL_TA_TPRI			TRUE				/**< %jp{TA_TPRI属性に対応する} */
+
+/* Value range */
+#define _KERNEL_CFG_MPL_TMAX_BLKCNT		(-1)				/**< %jp{ブロック数の最大値} */
+#define _KERNEL_CFG_MPL_TMAX_BLKSZ		(-1)				/**< %jp{ブロックサイズの最大値} */
+
+/* Algorithm */
+#define _KERNEL_CFG_MPL_ALGORITHM		_KERNEL_MPL_ALG_CHAIN_NUM
+/* %jp{
+   _KERNEL_MPF_ALG_CHAIN_PTR : 空きブロックをポインタでチェイン(乗算器の無いCPUでも高速)
+   _KERNEL_MPF_ALG_CHAIN_NUM : 空きブロックをブロック番号でチェイン(メモリが削減できる場合あり)
+}*/
+
+/* Control block */
+#define _KERNEL_CFG_MPLCB_ALGORITHM		_KERNEL_MPLCB_ALG_PTRARRAY
+#define _KERNEL_CFG_MPLCB_SPLIT_RO		FALSE				/**< %jp{MPLCBの不変部を分割してROM部配置とするか} */
+#define _KERNEL_CFG_MPLCB_BITFIELD		FALSE				/**< %jp{ビットフィールドを利用してTCBを圧縮するか} */
+
+
+
 /* ------------------------------------------------------------------ */
 /*  System Time Management                                            */
 /* ------------------------------------------------------------------ */

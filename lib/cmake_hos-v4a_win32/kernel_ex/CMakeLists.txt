@@ -349,6 +349,19 @@ set(KERNEL_SRCS ${KERNEL_SRCS}
     ${EXCOBJ_DIR}/exe_exc.c
 )
 
+########################################
+
+# Variable-sized Memory Pools
+set(MPLOBJ_DIR ${KERNEL_EXT_SRC_DIR}/object/mpl)
+set(KERNEL_SRCS ${KERNEL_SRCS}
+    ${MPLOBJ_DIR}/acre_mpl.c
+    ${MPLOBJ_DIR}/kcre_mpl.c
+    ${MPLOBJ_DIR}/get_mpl.c
+    ${MPLOBJ_DIR}/pget_mpl.c
+    ${MPLOBJ_DIR}/tget_mpl.c
+    ${MPLOBJ_DIR}/rel_mpl.c
+)
+
 #################################################################################
 
 add_library(hosv4a_ex STATIC

@@ -1,43 +1,33 @@
-/** 
- *  Hyper Operating System V4 Advance
- *
- * @file  get_mpf.c
- * @brief %jp{固定長メモリプール資源の獲得}%en{Acquire Semaphore Resource}
- *
- * Copyright (C) 1998-2006 by Project HOS
- * http://sourceforge.jp/projects/hos/
- */
-
-
+/* hos v4a の rel_mpf.c を元に改変 */
 
 #include "core/core.h"
-#include "object/mpfobj.h"
+#include "object/mplobj.h"
 
 
 
-#if _KERNEL_SPT_GET_MPF
+#if _KERNEL_SPT_GET_MPL
 
 
-#if _KERNEL_SPT_TGET_MPF && (_KERNEL_OPT_CODE_SIZE <= _KERNEL_OPT_SPEED)	/* %jp{tget_mpfありで、サイズ優先なら} */
+#if _KERNEL_SPT_TGET_MPL && (_KERNEL_OPT_CODE_SIZE <= _KERNEL_OPT_SPEED)	/* %jp{tget_mplありで、サイズ優先なら} */
 
 
-ER get_mpf(ID mpfid, VP *p_blk)
+ER get_mpl(ID mplid, VP *p_blk)
 {
-	/* %jp{tget_mpfで代替する} */
-	return tget_mpf(mpfid, p_blk, TMO_FEVR);
+	/* %jp{tget_mplで代替する} */
+	return tget_mpl(mplid, p_blk, TMO_FEVR);
 }
 
 #else
 
 
-ER rel_mpf(ID mpfid, VP blk)
+ER rel_mpl(ID mplid, VP blk)
 {
-	_KERNEL_T_MPFCB_PTR mpfcb;
+	_KERNEL_T_MPLCB_PTR mplcb;
 	_KERNEL_T_TSKHDL    tskhdl;
 	_KERNEL_T_TCB       *tcb;
 
 	/* %jp{コンテキストチェック} */
-#if _KERNEL_SPT_GET_MPF_E_CTX
+#if _KERNEL_SPT_GET_MPL_E_CTX
 	if ( _KERNEL_SYS_SNS_DPN() )
 	{
 		_KERNEL_LEAVE_SVC();	/* %jp{サービスコールから出る}%en{leave service-call} */
@@ -46,8 +36,8 @@ ER rel_mpf(ID mpfid, VP blk)
 #endif
 	
 	/* %jp{ID のチェック} */
-#if _KERNEL_SPT_GET_MPF_E_ID
-	if ( !_KERNEL_MPF_CHECK_MPFID(mpfid) )
+#if _KERNEL_SPT_GET_MPL_E_ID
+	if ( !_KERNEL_MPL_CHECK_MPLID(mplid) )
 	{
 		return E_ID;	/* %jp{不正ID番号}%en{Invalid ID number} */
 	}
@@ -56,8 +46,8 @@ ER rel_mpf(ID mpfid, VP blk)
 	_KERNEL_ENTER_SVC();		/* %jp{サービスコールに入る}%en{enter service-call} */
 	
 	/* %jp{オブジェクト存在チェック} */
-#if _KERNEL_SPT_GET_MPF_E_NOEXS
-	if ( !_KERNEL_MPF_CHECK_EXS(mpfid) )
+#if _KERNEL_SPT_GET_MPL_E_NOEXS
+	if ( !_KERNEL_MPL_CHECK_EXS(mplid) )
 	{
 		_KERNEL_LEAVE_SVC();	/* %jp{サービスコールから出る}%en{leave service-call} */
 		return E_NOEXS;			/* %jp{オブジェクト未生成}%en{Non-existant object} */
@@ -65,10 +55,10 @@ ER rel_mpf(ID mpfid, VP blk)
 #endif
 
 	/* %jp{コントロールブロック取得} */
-	mpfcb = _KERNEL_MPF_ID2MPFCB(mpfid);
+	mplcb = _KERNEL_MPL_ID2MPLCB(mplid);
 
 	/* %jp{待ち行列先頭からタスク取り出し} */
-	tskhdl = _KERNEL_MPF_RMH_QUE(mpfcb);
+	tskhdl = _KERNEL_MPL_RMH_QUE(mplcb);
 	if ( tskhdl != _KERNEL_TSKHDL_NULL )
 	{
 		VP *p_blk;
@@ -79,7 +69,7 @@ ER rel_mpf(ID mpfid, VP blk)
 		*p_blk = blk;
 		_KERNEL_TSK_SET_ERCD(tcb, E_OK);			/* %jp{エラーコード設定} */
 		_KERNEL_DSP_WUP_TSK(tskhdl);				/* %jp{タスクの待ち解除} */
-		_KERNEL_MPF_RMV_TOQ(tskhdl);
+		_KERNEL_MPL_RMV_TOQ(tskhdl);
 		
 		/* %jp{タスクディスパッチの実行} */
 		_KERNEL_DSP_TSK();
@@ -87,8 +77,8 @@ ER rel_mpf(ID mpfid, VP blk)
 	else
 	{
 		/* %jp{プールに返却} */
-		*(_KERNEL_MPF_T_BLKHDL *)blk = _KERNEL_MPF_GET_FREBLK(mpfcb);
-		_KERNEL_MPF_SET_FREBLK(mpfcb, _KERNEL_MPF_PTR2BLKHDL(mpfcb, blk));
+		*(_KERNEL_MPL_T_BLKHDL *)blk = _KERNEL_MPL_GET_FREBLK(mplcb);
+		_KERNEL_MPL_SET_FREBLK(mplcb, _KERNEL_MPL_PTR2BLKHDL(mplcb, blk));
 	}
 	
 	_KERNEL_LEAVE_SVC();	/* %jp{サービスコールから出る}%en{leave service-call} */
@@ -99,13 +89,13 @@ ER rel_mpf(ID mpfid, VP blk)
 #endif
 
 
-#else	/* _KERNEL_SPT_GET_MPF */
+#else	/* _KERNEL_SPT_GET_MPL */
 
 
-#if _KERNEL_SPT_GET_MPF_E_NOSPT
+#if _KERNEL_SPT_GET_MPL_E_NOSPT
 
 
-ER get_mpf(ID mpfid)
+ER get_mpl(ID mplid)
 {
 	return E_NOSPT;
 }
@@ -113,7 +103,7 @@ ER get_mpf(ID mpfid)
 #endif
 
 
-#endif	/* _KERNEL_SPT_GET_MPF */
+#endif	/* _KERNEL_SPT_GET_MPL */
 
 
 

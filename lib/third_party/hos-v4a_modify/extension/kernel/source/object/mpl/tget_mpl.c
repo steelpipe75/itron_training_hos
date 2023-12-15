@@ -1,46 +1,36 @@
-/** 
- *  Hyper Operating System V4 Advance
- *
- * @file  tget_mpf.c
- * @brief %jp{固定長メモリプール資源の獲得(タイムアウトあり)}%en{Acquired Fixed-Sized Memory Block(with Timeout)}
- *
- * Copyright (C) 1998-2007 by Project HOS
- * http://sourceforge.jp/projects/hos/
- */
-
-
+/* hos v4a の rel_mpf.c を元に改変 */
 
 #include "core/core.h"
-#include "object/mpfobj.h"
+#include "object/mplobj.h"
 
 
 
-#if _KERNEL_SPT_TGET_MPF
+#if _KERNEL_SPT_TGET_MPL
 
 
-#if _KERNEL_SPT_TGET_MPF && (_KERNEL_OPT_CODE_SIZE <= _KERNEL_OPT_SPEED)	/* %jp{tget_mpfありで、サイズ優先なら} */
+#if _KERNEL_SPT_TGET_MPL && (_KERNEL_OPT_CODE_SIZE <= _KERNEL_OPT_SPEED)	/* %jp{tget_mplありで、サイズ優先なら} */
 
-/** %jp{固定長メモリプールの獲得(タイムアウトあり)}%en{Acquired Fixed-Sized Memory Block(with Timeout)}
- * @param  mpfid	%jp{メモリブロック獲得対象の固定長メモリプールのID番号}%en{ID number of the fixed-sized memory pool from which resource is acquired}
- * @param  p_blkf	%jp{固定長メモリプール生成情報を入れたパケットへのポインタ}%en{Start address of the acquired memory block}
+/** %jp{可変長メモリプールの獲得(タイムアウトあり)}
+ * @param  mplid	%jp{メモリブロック獲得対象の可変長メモリプールのID番号}
+ * @param  p_blkf	%jp{可変長メモリプール生成情報を入れたパケットへのポインタ}
  * @retval E_OK     %jp{正常終了}%en{Normal completion}
- * @retval E_ID     %jp{不正ID番号(mpfidが不正あるいは使用できない)}%en{Invalid ID number(mpfid is invalid or unusable)}
- * @retval E_NOEXS  %jp{オブジェクト未生成(対象固定長メモリプールが未登録)}%en{Non-existant object(specified fixed-sized memory pool is not registerd)}
- * @retval E_PAR    %jp{パラメータエラー(p_blk, tmoutが不正)}%en{Forced release from waiting(accept rel_wai while waiting)}
- * @retval E_RLWAI  %jp{待ち状態の強制解除(待ち状態の間にrel_waiを受付)}%en{Forced release from waiting(accept rel_wai while waiting)}
- * @retval E_DLT    %jp{待ちオブジェクトの削除(待ち状態の間に固定長メモリプールが削除)}%en{Waiting object deleted(fixed-sized memory pool is deleted waiting)}
+ * @retval E_ID     %jp{不正ID番号(mplidが不正あるいは使用できない)}
+ * @retval E_NOEXS  %jp{オブジェクト未生成(対象可変長メモリプールが未登録)}
+ * @retval E_PAR    %jp{パラメータエラー(p_blk, tmoutが不正)}
+ * @retval E_RLWAI  %jp{待ち状態の強制解除(待ち状態の間にrel_waiを受付)}
+ * @retval E_DLT    %jp{待ちオブジェクトの削除(待ち状態の間に可変長メモリプールが削除)}
  */
-ER tget_tmpf(ID mpfid, VP *p_blk, TMO tmout)
+ER tget_tmpl(ID mplid, VP *p_blk, TMO tmout)
 {
-	_KERNEL_T_MPFCB_PTR  mpfcb;
+	_KERNEL_T_MPLCB_PTR  mplcb;
 	_KERNEL_T_TSKHDL     tskhdl;
 	_KERNEL_T_TCB        *tcb;
-	_KERNEL_MPF_T_BLKHDL blkhdl;
+	_KERNEL_MPL_T_BLKHDL blkhdl;
 	VP                   blkptr;
 	ER                   ercd;
 	
 	/* %jp{コンテキストチェック} */
-#if _KERNEL_SPT_GET_MPF_E_CTX
+#if _KERNEL_SPT_GET_MPL_E_CTX
 	if ( _KERNEL_SYS_SNS_DPN() )
 	{
 		return E_CTX;			/* %jp{コンテキストエラー}%en{Context error} */
@@ -48,8 +38,8 @@ ER tget_tmpf(ID mpfid, VP *p_blk, TMO tmout)
 #endif
 	
 	/* %jp{ID のチェック} */
-#if _KERNEL_SPT_GET_MPF_E_ID
-	if ( !_KERNEL_MPF_CHECK_MPFID(mpfid) )
+#if _KERNEL_SPT_GET_MPL_E_ID
+	if ( !_KERNEL_MPL_CHECK_MPLID(mplid) )
 	{
 		return E_ID;	/* %jp{不正ID番号}%en{Invalid ID number} */
 	}
@@ -58,8 +48,8 @@ ER tget_tmpf(ID mpfid, VP *p_blk, TMO tmout)
 	_KERNEL_ENTER_SVC();		/* %jp{サービスコールに入る}%en{enter service-call} */
 	
 	/* %jp{オブジェクト存在チェック} */
-#if _KERNEL_SPT_GET_MPF_E_NOEXS
-	if ( !_KERNEL_MPF_CHECK_EXS(mpfid) )
+#if _KERNEL_SPT_GET_MPL_E_NOEXS
+	if ( !_KERNEL_MPL_CHECK_EXS(mplid) )
 	{
 		_KERNEL_LEAVE_SVC();	/* %jp{サービスコールから出る}%en{leave service-call} */
 		return E_NOEXS;			/* %jp{オブジェクト未生成}%en{Non-existant object} */
@@ -67,23 +57,23 @@ ER tget_tmpf(ID mpfid, VP *p_blk, TMO tmout)
 #endif
 
 	/* %jp{コントロールブロック取得} */
-	mpfcb = _KERNEL_MPF_ID2MPFCB(mpfid);
+	mplcb = _KERNEL_MPL_ID2MPLCB(mplid);
 	
-	/* %jp{固定長メモリプールカウンタ取得} */
-	blkhdl = _KERNEL_MPF_GET_FREBLK(mpfcb);
+	/* %jp{可変長メモリプールカウンタ取得} */
+	blkhdl = _KERNEL_MPL_GET_FREBLK(mplcb);
 	
-	if ( blkhdl != _KERNEL_MPF_BLKHDL_NULL )
+	if ( blkhdl != _KERNEL_MPL_BLKHDL_NULL )
 	{
-		/* %jp{固定長メモリプール資源が獲得できれば成功} */
-		blkptr = _KERNEL_MPF_BLKHDL2PTR(mpfcb, blkhdl);
+		/* %jp{可変長メモリプール資源が獲得できれば成功} */
+		blkptr = _KERNEL_MPL_BLKHDL2PTR(mplcb, blkhdl);
 		*p_blk = blkptr;
-		_KERNEL_MPF_SET_FREBLK(mpfcb, *(_KERNEL_MPF_T_BLKHDL *)blkptr);
-		_KERNEL_MPF_SET_FBLKCNT(mpfcb, _KERNEL_MPF_GET_FBLKCNT(mpfhdl) - 1);
+		_KERNEL_MPL_SET_FREBLK(mplcb, *(_KERNEL_MPL_T_BLKHDL *)blkptr);
+		_KERNEL_MPL_SET_FBLKCNT(mplcb, _KERNEL_MPL_GET_FBLKCNT(mplhdl) - 1);
 		ercd = E_OK;
 	}
 	else
 	{
-#if _KERNEL_SPT_TGET_MPF || _KERNEL_SPT_PGET_MPF
+#if _KERNEL_SPT_TGET_MPL || _KERNEL_SPT_PGET_MPL
 		if ( tmout == TMO_POL )
 		{
 			ercd = E_TMOUT;  /* %jp{タイムアウト}%en{Timeout} */
@@ -94,13 +84,13 @@ ER tget_tmpf(ID mpfid, VP *p_blk, TMO tmout)
 				/* %jp{タスクを待ち状態にする} */
 			tskhdl = _KERNEL_SYS_GET_RUNTSK();
 			tcb = _KERNEL_TSK_TSKHDL2TCB(tskhdl);				/* %jp{TCB取得} */
-			_KERNEL_TSK_SET_TSKWAIT(tcb, _KERNEL_TTW_MPF);
-			_KERNEL_TSK_SET_WOBJID(tcb, mpfid);
+			_KERNEL_TSK_SET_TSKWAIT(tcb, _KERNEL_TTW_MPL);
+			_KERNEL_TSK_SET_WOBJID(tcb, mplid);
 			_KERNEL_TSK_SET_DATA(tcb, (VP_INT)p_blk);
 			_KERNEL_DSP_WAI_TSK(tskhdl);
-			_KERNEL_MPF_ADD_QUE(mpfcb, _KERNEL_MPF_GET_MPFCB_RO(mpfid, mpfcb), tskhdl);		/* %jp{待ち行列に追加} */
+			_KERNEL_MPL_ADD_QUE(mplcb, _KERNEL_MPL_GET_MPLCB_RO(mplid, mplcb), tskhdl);		/* %jp{待ち行列に追加} */
 
-#if _KERNEL_SPT_TGET_MPF
+#if _KERNEL_SPT_TGET_MPL
 			if ( tmout != TMO_FEVR )
 			{
 				_KERNEL_SEM_ADD_TOQ(tskhdl, tmout);				/* %jp{タイムアウトキューに追加} */
@@ -124,17 +114,17 @@ ER tget_tmpf(ID mpfid, VP *p_blk, TMO tmout)
 #endif
 
 
-#else	/* _KERNEL_SPT_PGET_MPF */
+#else	/* _KERNEL_SPT_PGET_MPL */
 
 
-#if _KERNEL_SPT_PGET_MPF_E_NOSPT
+#if _KERNEL_SPT_PGET_MPL_E_NOSPT
 
-/** %jp{固定長メモリプールの獲得(タイムアウトあり)}%en{Acquired Fixed-Sized Memory Block(with Timeout)}
- * @param  mpfid	%jp{メモリブロック獲得対象の固定長メモリプールのID番号}%en{ID number of the fixed-sized memory pool from which resource is acquired}
- * @param  p_blkf	%jp{固定長メモリプール生成情報を入れたパケットへのポインタ}%en{Start address of the acquired memory block}
+/** %jp{可変長メモリプールの獲得(タイムアウトあり)}
+ * @param  mplid	%jp{メモリブロック獲得対象の可変長メモリプールのID番号}
+ * @param  p_blkf	%jp{可変長メモリプール生成情報を入れたパケットへのポインタ}
  * @retval E_NOSPT  %jp{未サポート機能}%en{Unsupported function}
  */
-ER tget_mpf(ID mpfid)
+ER tget_mpl(ID mplid)
 {
 	return E_NOSPT;
 }
@@ -142,7 +132,7 @@ ER tget_mpf(ID mpfid)
 #endif
 
 
-#endif	/* _KERNEL_SPT_PGET_MPF */
+#endif	/* _KERNEL_SPT_PGET_MPL */
 
 
 

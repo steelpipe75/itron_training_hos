@@ -1147,6 +1147,60 @@
 
 
 
+/* ---------------------------------------------- */
+/*  Valable-sized memory pools                    */
+/* ---------------------------------------------- */
+
+
+#define _KERNEL_MPL_ALG_CHAIN_PTR	1
+#define _KERNEL_MPL_ALG_CHAIN_NUM	2
+
+#define _KERNEL_MPLCB_ALG_BLKARRAY	1
+#define _KERNEL_MPLCB_ALG_PTRARRAY	2
+
+
+/* Attribute */
+#define _KERNEL_SPT_MPL_TA_TFIFO	_KERNEL_CFG_MPL_TA_TFIFO		/**< %jp{TA_TFIFO属性に対応する} */
+#define _KERNEL_SPT_MPL_TA_TPRI		_KERNEL_CFG_MPL_TA_TPRI			/**< %jp{TA_TPRI属性に対応する} */
+
+#define _KERNEL_MPL_ALGORITHM		_KERNEL_CFG_MPL_ALGORITHM
+
+
+/* Control block */
+#define _KERNEL_MPLCB_ALGORITHM		_KERNEL_MPLCB_ALG_BLKARRAY
+#define _KERNEL_MPLCB_BITFIELD		_KERNEL_CFG_MPLCB_BITFIELD		/**< %jp{ビットフィールドを利用してTCBを圧縮するか} */
+
+/* %jp{ブロック配列で動的生成がある場合はRO分離は不可} */
+#if (_KERNEL_MPLCB_ALGORITHM == _KERNEL_MPLCB_ALG_BLKARRAY) && (_KERNEL_SPT_CRE_MPL || _KERNEL_SPT_ACRE_MPL)
+#define _KERNEL_MPLCB_SPLIT_RO		FALSE
+#else
+#define _KERNEL_MPLCB_SPLIT_RO		_KERNEL_CFG_MPLCB_SPLIT_RO
+#endif
+
+
+#if _KERNEL_CFG_MPL_TMAX_BLKCNT <= 0
+#define _KERNEL_MPL_TMAX_BLKCNT		_KERNEL_TMAX_UINT
+#else
+#define _KERNEL_MPL_TMAX_BLKCNT		_KERNEL_CFG_MPL_TMAX_BLKCNT
+#endif
+
+#if _KERNEL_CFG_MPL_TMAX_BLKSZ <= 0
+#define _KERNEL_MPL_TMAX_BLKSZ		_KERNEL_TMAX_UINT
+#else
+#define _KERNEL_MPL_TMAX_BLKSZ		_KERNEL_CFG_MPL_TMAX_BLKSZ
+#endif
+
+
+#define _KERNEL_MPLCB_QUE			TRUE
+#define _KERNEL_MPLCB_FREBLK		TRUE
+#define _KERNEL_MPLCB_FBLKCNT		FALSE
+#define _KERNEL_MPLCB_MPLATR		TRUE
+#define _KERNEL_MPLCB_BLKCNT		TRUE
+#define _KERNEL_MPLCB_BLKSZ			TRUE
+#define _KERNEL_MPLCB_MPL			TRUE
+
+
+
 /* ------------------------------------------------------------------ */
 /*  System Time Management                                            */
 /* ------------------------------------------------------------------ */

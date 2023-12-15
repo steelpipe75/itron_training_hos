@@ -1,3 +1,9 @@
+#if 1
+/**
+ * hos-v4a の kernel\include\config\cfgknl.h
+ * をもとに改変
+ */
+#endif
 /** 
  *  Hyper Operating System V4 Advance
  *

@@ -23,7 +23,7 @@ if(NOT CMAKE_BUILD_TYPE)
     set(CMAKE_BUILD_TYPE "${default_build_type}" CACHE
         STRING "Choose the type of build." FORCE)
     set_property(CACHE CMAKE_BUILD_TYPE PROPERTY STRINGS
-        "Debug" "Release")
+        "Debug" "Release" "Coverage")
 endif()
 
 #################################################################################
@@ -74,6 +74,12 @@ if(BUILD_TLSF_SAMPLE)
     target_compile_options_helper(tlsf_sample) 
     include(${WORKSPACE_ROOT_DIR}/lib/cmake_utility/configure_file/vs_vscode.cmake)
     vs_and_vscode_helper(tlsf_sample)
+
+    if(${CMAKE_BUILD_TYPE} STREQUAL "Coverage")
+        target_link_options(tlsf_sample
+            PRIVATE -fprofile-arcs -ftest-coverage
+        )
+    endif()
 endif()
 
 #################################################################################

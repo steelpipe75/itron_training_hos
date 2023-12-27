@@ -1,0 +1,7 @@
+cd /d %~dp0
+llvm-profdata merge default.profraw --output @LAUNCH_JSON_EXE_FILE@.profdata
+llvm-cov show              -show-line-counts-or-regions --show-branches=count --show-expansions                                             -instr-profile @LAUNCH_JSON_EXE_FILE@.profdata @LAUNCH_JSON_EXE_FILE@
+llvm-cov show -format=html -show-line-counts-or-regions --show-branches=count --show-expansions -output-dir=cov_html/@LAUNCH_JSON_EXE_FILE@ -instr-profile @LAUNCH_JSON_EXE_FILE@.profdata @LAUNCH_JSON_EXE_FILE@
+llvm-cov report -instr-profile @LAUNCH_JSON_EXE_FILE@.profdata @LAUNCH_JSON_EXE_FILE@
+llvm-cov report -instr-profile @LAUNCH_JSON_EXE_FILE@.profdata @LAUNCH_JSON_EXE_FILE@ >@LAUNCH_JSON_EXE_FILE@.coverage_report.txt
+cmd /k

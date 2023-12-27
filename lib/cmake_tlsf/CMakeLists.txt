@@ -74,12 +74,6 @@ if(BUILD_TLSF_SAMPLE)
     target_compile_options_helper(tlsf_sample) 
     include(${WORKSPACE_ROOT_DIR}/lib/cmake_utility/configure_file/vs_vscode.cmake)
     vs_and_vscode_helper(tlsf_sample)
-
-    if(${CMAKE_BUILD_TYPE} STREQUAL "Coverage")
-        target_link_options(tlsf_sample
-            PRIVATE -fprofile-arcs -ftest-coverage
-        )
-    endif()
 endif()
 
 #################################################################################

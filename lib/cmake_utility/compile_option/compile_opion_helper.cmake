@@ -21,4 +21,8 @@ macro(target_compile_options_helper ARG_TARGET_NAME)
             PRIVATE $<$<AND:$<CXX_COMPILER_ID:Clang>>:-Wno-unused-parameter>
         )
     endif()
+    target_link_options(${ARG_TARGET_NAME}
+        PRIVATE $<$<AND:$<C_COMPILER_ID:Clang>,$<CONFIG:Coverage>>:-fprofile-instr-generate -fcoverage-mapping>
+        PRIVATE $<$<AND:$<CXX_COMPILER_ID:Clang>,$<CONFIG:Coverage>>:-fprofile-instr-generate -fcoverage-mapping>
+    )
 endmacro()
